@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>紫微斗数人格测试</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#f4f1fa; --surface:#ffffff; --surface2:#efeaf8; --ink:#292040; --muted:#6f648c;
+  --line:#ddd3ef; --accent:#5b3e91; --accent-ink:#ffffff; --gold:#a4791c; --gold-bg:#faf3dd;
+  --danger:#b3372f; --ok:#2e7d4f;
+  --hua-lu:#2e7d4f; --hua-quan:#b3372f; --hua-ke:#2f5fb3; --hua-ji:#6a4a8f;
+  --cell-ming:#efe7fb; --shadow:0 10px 30px rgba(43,28,84,.10);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#120e1e; --surface:#1d1730; --surface2:#251d3f; --ink:#ece7f8; --muted:#a79cc4;
+    --line:#382d58; --accent:#a684e0; --accent-ink:#17102a; --gold:#d3ab4a; --gold-bg:#2c2410;
+    --danger:#e08a83; --ok:#8fd0a8;
+    --hua-lu:#8fd0a8; --hua-quan:#e08a83; --hua-ke:#9db9ea; --hua-ji:#c4a6ea;
+    --cell-ming:#2c2150; --shadow:0 10px 30px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px 64px}
+h1,h2,h3,.serif{font-family:"Noto Serif SC","Songti SC",serif}
+.view{display:none}
+.view.active{display:block}
+/* ---------- 首页 ---------- */
+.hero{text-align:center;padding:64px 12px 8px}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border:2px solid var(--gold);border-radius:10px;color:var(--gold);font-family:"Noto Serif SC",serif;font-weight:900;font-size:22px;line-height:1.15;letter-spacing:2px;background:var(--gold-bg)}
+.hero h1{font-size:clamp(32px,7vw,46px);font-weight:900;margin:22px 0 6px;letter-spacing:4px}
+.hero .sub{color:var(--accent);font-family:"Noto Serif SC",serif;font-size:17px;letter-spacing:6px;margin:0 0 14px}
+.hero .desc{color:var(--muted);max-width:520px;margin:0 auto;font-size:15px}
+.hero .rule{width:56px;height:2px;background:var(--gold);margin:26px auto;border-radius:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:10px;padding:12px 28px;font-size:16px;font-weight:700;min-height:48px;text-decoration:none}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn[disabled]{opacity:.55;cursor:wait}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.home-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:36px 0 8px}
+.home-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 16px;text-align:left}
+.home-card h3{margin:0 0 6px;font-size:16px}
+.home-card p{margin:0;color:var(--muted);font-size:13.5px}
+.foot-note{text-align:center;color:var(--muted);font-size:12.5px;margin-top:34px}
+/* ---------- 表单 ---------- */
+.page-head{padding:34px 4px 6px}
+.page-head h2{font-size:26px;margin:0 0 4px;letter-spacing:2px}
+.page-head p{color:var(--muted);margin:0;font-size:14px}
+form.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 18px;margin-top:16px;box-shadow:var(--shadow)}
+.field{margin-bottom:20px}
+.field label.lab,.field .lab{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.field label.lab .opt{font-weight:400;color:var(--muted);font-size:13px}
+.field input[type="text"],.field input[type="date"],.field input[type="time"],.field select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:16px;min-height:46px}
+.field input:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.seg{display:flex;gap:10px}
+.seg label{flex:1}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg .segbtn{display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:9px;padding:11px 0;font-size:16px;cursor:pointer;min-height:46px;background:var(--surface)}
+.seg input:checked + .segbtn{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;font-size:14px;cursor:pointer;min-height:40px}
+.tabs button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.shichen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.shichen-grid button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:9px 2px;font-size:14px;cursor:pointer;min-height:48px;line-height:1.3}
+.shichen-grid button small{display:block;color:var(--muted);font-size:11px}
+.shichen-grid button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.shichen-grid button.on small{color:inherit;opacity:.8}
+.hint{color:var(--muted);font-size:13px;margin-top:8px}
+.err{color:var(--danger);font-size:13.5px;margin-top:8px;display:none;font-weight:600}
+.err.show{display:block}
+.city-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.search-results{border:1px solid var(--line);border-radius:9px;margin-top:6px;max-height:220px;overflow:auto;display:none;background:var(--surface)}
+.search-results.show{display:block}
+.search-results button{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--line);padding:11px 12px;font-size:15px;color:var(--ink);cursor:pointer;min-height:44px}
+.search-results button:last-child{border-bottom:none}
+.tag-direct{font-size:11px;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:0 4px;margin-left:6px;white-space:nowrap}
+/* ---------- 结果 ---------- */
+.warn-banner{background:var(--gold-bg);border:1px solid var(--gold);color:var(--ink);border-radius:10px;padding:12px 14px;font-size:14px;margin:14px 0;font-weight:600}
+.crossed{color:var(--danger);font-weight:700}
+.same{color:var(--ok);font-weight:700}
+.result-head{padding:30px 4px 4px;text-align:center}
+.result-head h2{font-size:27px;margin:0 0 4px;letter-spacing:2px}
+.result-head p{color:var(--muted);margin:2px 0;font-size:14px}
+.chart{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,minmax(104px,auto));gap:5px;margin:16px 0}
+.cell{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 7px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.cell.ming{background:var(--cell-ming);border-color:var(--accent);border-width:1.5px}
+.cell .gz{font-size:10.5px;color:var(--muted);display:flex;justify-content:space-between;gap:4px}
+.cell .pname{font-size:12px;font-weight:700;margin-top:auto;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.cell .pname .shen{font-size:10px;background:var(--gold);color:#fff;border-radius:4px;padding:0 4px;font-weight:700}
+.cell .main-stars{font-family:"Noto Serif SC",serif;font-weight:900;font-size:15.5px;line-height:1.45;margin:2px 0;word-break:break-all}
+.cell .aux-stars{font-size:11px;color:var(--muted);line-height:1.5;word-break:break-all}
+.hua{font-size:10px;border-radius:4px;padding:0 3px;margin-left:2px;font-weight:700;vertical-align:1px}
+.hua.lu{color:var(--hua-lu);border:1px solid var(--hua-lu)}
+.hua.quan{color:var(--hua-quan);border:1px solid var(--hua-quan)}
+.hua.ke{color:var(--hua-ke);border:1px solid var(--hua-ke)}
+.hua.ji{color:var(--hua-ji);border:1px solid var(--hua-ji)}
+.cell.center{grid-column:2/4;grid-row:2/4;background:var(--surface2);align-items:center;justify-content:center;text-align:center;padding:12px}
+.cell.center .cname{font-family:"Noto Serif SC",serif;font-size:19px;font-weight:900;letter-spacing:2px}
+.cell.center .cline{font-size:12.5px;color:var(--muted);line-height:1.7}
+.cell.center .cline b{color:var(--ink)}
+.kw-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 6px}
+.kw{font-family:"Noto Serif SC",serif;font-weight:700;font-size:16px;border:1.5px solid var(--gold);color:var(--gold);border-radius:999px;padding:6px 16px;background:var(--gold-bg)}
+.summary-line{text-align:center;font-size:16.5px;font-family:"Noto Serif SC",serif;margin:8px auto 4px;max-width:640px;line-height:1.8}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}
+.panel h3{margin:0 0 10px;font-size:18px;letter-spacing:1px}
+.panel h3 .no{color:var(--gold);margin-right:8px;font-family:"Noto Serif SC",serif}
+.panel p{margin:0 0 8px;font-size:15px}
+.panel p:last-child{margin-bottom:0}
+.ov-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;font-size:15px}
+.ov-grid .k{color:var(--muted);font-size:13px;display:block}
+.ov-grid .v{font-weight:700}
+.lucky-dot{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px;border:1px solid rgba(0,0,0,.15)}
+details.basis{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 18px}
+details.basis summary{cursor:pointer;font-weight:700;font-size:16px;padding:12px 0;font-family:"Noto Serif SC",serif;letter-spacing:1px}
+.basis-item{border-top:1px solid var(--line);padding:12px 0}
+.basis-item h4{margin:0 0 4px;font-size:15px}
+.basis-item p{margin:0;font-size:14px;color:var(--ink)}
+.basis-item .src{color:var(--muted);font-size:12.5px;margin-top:3px}
+/* ---------- 弹窗 ---------- */
+.modal{position:fixed;inset:0;background:rgba(10,6,24,.72);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:22px 12px;z-index:50}
+.modal.show{display:flex}
+.modal-box{background:var(--surface);border-radius:14px;max-width:520px;width:100%;padding:18px;text-align:center}
+.modal-box img{width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
+.modal-box p{color:var(--muted);font-size:13.5px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:14px;display:none;z-index:60;max-width:88vw;text-align:center}
+.toast.show{display:block}
+@media (max-width:640px){
+  .home-cards{grid-template-columns:1fr}
+  .chart{grid-template-rows:repeat(4,minmax(96px,auto));gap:4px}
+  .cell .main-stars{font-size:13.5px}
+  .cell .aux-stars{font-size:10px}
+  .cell .pname{font-size:11px}
+  .cell.center .cname{font-size:15px}
+  .cell.center .cline{font-size:11px;line-height:1.6}
+  .shichen-grid{grid-template-columns:repeat(3,1fr)}
+  .ov-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 首页 -->
+  <section id="view-home" class="view active">
+    <div class="hero">
+      <span class="seal">紫微<br/>斗数</span>
+      <h1>紫微斗数人格测试</h1>
+      <p class="sub">排 命 盘 · 观 星 曜 · 解 性 情</p>
+      <p class="desc">依传统紫微斗数安星规则排出你的十二宫命盘，结合命宫主星、身宫、三方四正与生年四化，生成一份专属于你的性格解读报告。</p>
+      <div class="rule"></div>
+      <button class="btn btn-primary" id="btn-start" type="button">开始测试</button>
+    </div>
+    <div class="home-cards">
+      <div class="home-card"><h3>完整命盘</h3><p>十四主星、辅星杂曜与四化按文墨天机通行的安星法安放，十二宫命盘图完整呈现。</p></div>
+      <div class="home-card"><h3>组合解读</h3><p>报告由命宫主星、身宫落宫、三方四正与五行局组合推演，不是固定模板套话。</p></div>
+      <div class="home-card"><h3>依据可查</h3><p>每份报告附 5–8 条命理依据与典籍出处，可展开逐条查看。</p></div>
+    </div>
+    <p class="foot-note">命理为传统文化中的性格观察视角，报告供自我认识与娱乐参考，不作为重大决策依据。</p>
+  </section>
+
+  <!-- 填写页 -->
+  <section id="view-form" class="view">
+    <div class="page-head">
+      <h2>填写出生信息</h2>
+      <p>信息只在本页浏览器内计算，不会上传到任何服务器。</p>
+    </div>
+    <form class="card" id="birth-form" novalidate>
+      <div class="field">
+        <label class="lab" for="f-name">姓名 <span class="opt">（选填）</span></label>
+        <input type="text" id="f-name" maxlength="20" placeholder="不填也可以" autocomplete="name" />
+      </div>
+      <div class="field">
+        <span class="lab">性别</span>
+        <div class="seg" role="radiogroup" aria-label="性别">
+          <label><input type="radio" name="gender" value="男" /><span class="segbtn">男</span></label>
+          <label><input type="radio" name="gender" value="女" /><span class="segbtn">女</span></label>
+        </div>
+        <div class="err" id="err-gender">请选择性别，性别会影响大限起运的顺逆方向。</div>
+      </div>
+      <div class="field">
+        <label class="lab" for="f-date">出生日期（公历）</label>
+        <input type="date" id="f-date" min="1900-01-31" max="2100-12-31" />
+        <div class="err" id="err-date">请选择合法的出生日期。</div>
+      </div>
+      <div class="field">
+        <span class="lab">出生时间</span>
+        <div class="tabs" role="tablist">
+          <button type="button" id="tab-shichen" class="on">直接选时辰</button>
+          <button type="button" id="tab-clock">输入具体时间</button>
+          <button type="button" id="tab-unknown">不清楚</button>
+        </div>
+        <div id="pane-shichen">
+          <div class="shichen-grid" id="shichen-grid"></div>
+        </div>
+        <div id="pane-clock" style="display:none">
+          <input type="time" id="f-clock" />
+          <p class="hint" id="clock-hint">输入几点几分（按北京时间理解）后，会自动换算成对应时辰；若已选出生地，将按出生地经度换算真太阳时校正后，再定时刻排盘。</p>
+        </div>
+        <div id="pane-unknown" style="display:none">
+          <p class="hint" style="margin:0">已选择「不清楚出生时间」：排盘将按<strong>午时（11:00–13:00）</strong>推算，结果页会明确标注这一点，报告仅供参考。</p>
+        </div>
+        <div class="err" id="err-time">请选择出生时辰、输入具体时间，或选择「不清楚」。</div>
+      </div>
+      <div class="field">
+        <label class="lab" for="f-prov">出生地 <span class="opt">（选填，精确到市）</span></label>
+        <input type="text" id="f-city-search" placeholder="搜索城市名快速定位，如：泰州" autocomplete="off" />
+        <div class="search-results" id="search-results"></div>
+        <div class="city-cols" style="margin-top:10px">
+          <select id="f-prov" aria-label="省份"><option value="">省份（可不选）</option></select>
+          <select id="f-city" aria-label="城市"><option value="">城市（可不选）</option></select>
+        </div>
+        <p class="hint">选了出生地并输入具体时间时，会按出生地经度自动换算真太阳时再排盘：命宫、身宫、五行局与按时辰安放的星曜都按校正后的时辰定。直接选时辰则视为已经是真太阳时辰，不再校正。</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back-home" type="button">返回</button>
+        <button class="btn btn-primary" id="btn-submit" type="submit">排出我的命盘</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- 结果页 -->
+  <section id="view-result" class="view">
+    <div class="result-head">
+      <h2 id="r-title">我的紫微命盘</h2>
+      <p id="r-subtitle"></p>
+      <p id="r-birthline"></p>
+    </div>
+    <div id="r-unknown-banner"></div>
+    <div id="r-correction"></div>
+    <div class="chart" id="chart"></div>
+    <div class="kw-row" id="r-keywords"></div>
+    <p class="summary-line" id="r-summary"></p>
+    <div id="r-panels"></div>
+    <details class="basis" id="r-basis-wrap">
+      <summary>命理依据（可展开查看出处）</summary>
+      <div id="r-basis"></div>
+    </details>
+    <div class="btn-row" style="margin-top:26px">
+      <button class="btn btn-gold" id="btn-share" type="button">生成分享图</button>
+      <button class="btn btn-primary" id="btn-save" type="button">保存图片</button>
+      <button class="btn btn-ghost" id="btn-again" type="button">重新测试</button>
+    </div>
+    <p class="foot-note">命盘按固定规则计算：公历转农历、定命宫身宫、安十四主星与辅星、按生年干起四化；紫微定位采用文墨天机通行的安星法（局数除生日、借数奇逆偶顺），与《紫微斗数全书》安星表一致。</p>
+  </section>
+</div>
+
+<!-- 分享图预览弹窗 -->
+<div class="modal" id="poster-modal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <h3 class="serif" style="margin:4px 0 8px">分享图已生成</h3>
+    <img id="poster-img" alt="紫微斗数人格报告分享图" />
+    <p>长按图片即可保存或转发给朋友。若已弹出系统分享面板，可直接在面板里发送。</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" id="poster-download" download="ziwei-report.png">下载图片</a>
+      <button class="btn btn-ghost" id="poster-close" type="button">关闭</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   第一部分：基础常量与农历换算（公历 -> 农历，浏览器内置实现）
+   ============================================================ */
+var STEMS = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+var BRANCHES = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+var SHICHEN = [
+  {name:"子时", range:"23:00–01:00"}, {name:"丑时", range:"01:00–03:00"},
+  {name:"寅时", range:"03:00–05:00"}, {name:"卯时", range:"05:00–07:00"},
+  {name:"辰时", range:"07:00–09:00"}, {name:"巳时", range:"09:00–11:00"},
+  {name:"午时", range:"11:00–13:00"}, {name:"未时", range:"13:00–15:00"},
+  {name:"申时", range:"15:00–17:00"}, {name:"酉时", range:"17:00–19:00"},
+  {name:"戌时", range:"19:00–21:00"}, {name:"亥时", range:"21:00–23:00"}
+];
+var PALACE_NAMES = ["命宫","兄弟宫","夫妻宫","子女宫","财帛宫","疾厄宫","迁移宫","奴仆宫","官禄宫","田宅宫","福德宫","父母宫"];
+var CN_NUM = {"一":1,"二":2,"三":3,"四":4,"五":5,"六":6,"七":7,"八":8,"九":9,"十":10};
+function parseCnNum(s){
+  if(!s) return NaN;
+  if(/^\d+$/.test(s)) return parseInt(s,10);
+  if(s==="正") return 1; if(s==="冬") return 11; if(s==="腊") return 12;
+  if(s.length===1) return CN_NUM[s]||NaN;
+  if(s[0]==="十") return 10 + (CN_NUM[s[1]]||0);
+  if(s[0]==="廿"||s[0]==="念") return 20 + (CN_NUM[s[1]]||0);
+  if(s.indexOf("十")>0) return (CN_NUM[s[0]]||0)*10 + (CN_NUM[s[2]]||0);
+  return CN_NUM[s]||NaN;
+}
+function parseCnDay(s){
+  if(!s) return NaN;
+  if(/^\d+$/.test(s)) return parseInt(s,10);
+  if(s[0]==="初") return CN_NUM[s[1]]||NaN;
+  if(s[0]==="十") return 10 + (CN_NUM[s[1]]||0);
+  if(s[0]==="廿"||s[0]==="念") return 20 + (CN_NUM[s[1]]||0);
+  if(s==="三十") return 30; if(s==="二十") return 20;
+  return parseCnNum(s);
+}
+var _lunarFmt = null;
+function rawLunar(date){
+  if(!_lunarFmt){
+    _lunarFmt = new Intl.DateTimeFormat("zh-Hans-CN-u-ca-chinese",{year:"numeric",month:"long",day:"numeric"});
+  }
+  var parts = _lunarFmt.formatToParts(date), mp="", dp="";
+  for(var i=0;i<parts.length;i++){
+    if(parts[i].type==="month") mp = parts[i].value;
+    if(parts[i].type==="day") dp = parts[i].value;
+  }
+  var leap = mp.indexOf("闰")>=0;
+  var mstr = mp.replace("闰","").replace("月","");
+  return { month: parseCnNum(mstr), day: parseCnDay(dp), leap: leap };
+}
+var _lnyCache = {};
+function lunarNewYearDate(solarYear){
+  if(_lnyCache[solarYear]) return _lnyCache[solarYear];
+  var found = null;
+  for(var m=0;m<2 && !found;m++){
+    var start = (m===0)? new Date(solarYear,0,18,12) : new Date(solarYear,1,1,12);
+    var endDay = (m===0)? 31 : 22;
+    for(var d=(m===0?18:1); d<=endDay; d++){
+      var dt = new Date(solarYear, m, d, 12);
+      var l = rawLunar(dt);
+      if(l.month===1 && l.day===1 && !l.leap){ found = dt; break; }
+    }
+  }
+  _lnyCache[solarYear] = found;
+  return found;
+}
+/* 返回 {lunarYear, month, day, leap}；lunarYear 以农历正月初一为界 */
+function solarToLunar(y, m, d){
+  var date = new Date(y, m-1, d, 12);
+  var l = rawLunar(date);
+  var lny = lunarNewYearDate(y);
+  var lunarYear = (lny && date < lny) ? y-1 : y;
+  return { lunarYear: lunarYear, month: l.month, day: l.day, leap: !!l.leap };
+}
+function hourToShichen(h){ return Math.floor(((h+1)%24)/2); }
+</script>
+
+<script>
+"use strict";
+/* ============================================================
+   第二部分：出生地城市数据（内置，经度为东经，单位：度）
+   收录规则：地级市、自治州/地区/盟驻地、直辖市，及省直辖县级市（标记 direct=1）；
+   市管县级市（如靖江、泰兴、昆山、义乌）不收录。
+   ============================================================ */
+var CITY_DATA = {
+"北京市":[["北京市",116.4]],
+"天津市":[["天津市",117.2]],
+"河北省":[["石家庄市",114.5],["唐山市",118.2],["秦皇岛市",119.6],["邯郸市",114.5],["邢台市",114.5],["保定市",115.5],["张家口市",114.9],["承德市",117.9],["沧州市",116.8],["廊坊市",116.7],["衡水市",115.7],["定州市",115.0,1],["辛集市",115.2,1]],
+"山西省":[["太原市",112.5],["大同市",113.3],["阳泉市",113.6],["长治市",113.1],["晋城市",112.9],["朔州市",112.4],["晋中市",112.7],["运城市",111.0],["忻州市",112.7],["临汾市",111.5],["吕梁市",111.1]],
+"内蒙古自治区":[["呼和浩特市",111.7],["包头市",109.8],["乌海市",106.8],["赤峰市",118.9],["通辽市",122.2],["鄂尔多斯市",109.8],["呼伦贝尔市",119.8],["巴彦淖尔市",107.4],["乌兰察布市",113.1],["兴安盟",122.1],["锡林郭勒盟",116.1],["阿拉善盟",105.7]],
+"辽宁省":[["沈阳市",123.4],["大连市",121.6],["鞍山市",122.9],["抚顺市",123.9],["本溪市",123.8],["丹东市",124.4],["锦州市",121.1],["营口市",122.2],["阜新市",121.7],["辽阳市",123.2],["盘锦市",122.1],["铁岭市",123.7],["朝阳市",120.5],["葫芦岛市",120.8]],
+"吉林省":[["长春市",125.3],["吉林市",126.6],["四平市",124.4],["辽源市",125.1],["通化市",125.9],["白山市",126.4],["松原市",124.8],["白城市",122.8],["延边朝鲜族自治州",129.5]],
+"黑龙江省":[["哈尔滨市",126.6],["齐齐哈尔市",123.9],["鸡西市",130.9],["鹤岗市",130.3],["双鸭山市",131.2],["大庆市",125.0],["伊春市",128.8],["佳木斯市",130.3],["七台河市",131.0],["牡丹江市",129.6],["黑河市",127.5],["绥化市",126.9],["大兴安岭地区",124.7]],
+"上海市":[["上海市",121.5]],
+"江苏省":[["南京市",118.8],["无锡市",120.3],["徐州市",117.2],["常州市",119.9],["苏州市",120.6],["南通市",120.9],["连云港市",119.2],["淮安市",119.0],["盐城市",120.2],["扬州市",119.4],["镇江市",119.4],["泰州市",119.9],["宿迁市",118.3]],
+"浙江省":[["杭州市",120.2],["宁波市",121.5],["温州市",120.7],["嘉兴市",120.8],["湖州市",120.1],["绍兴市",120.6],["金华市",119.6],["衢州市",118.9],["舟山市",122.2],["台州市",121.4],["丽水市",119.9]],
+"安徽省":[["合肥市",117.3],["芜湖市",118.4],["蚌埠市",117.4],["淮南市",117.0],["马鞍山市",118.5],["淮北市",116.8],["铜陵市",117.8],["安庆市",117.1],["黄山市",118.3],["滁州市",118.3],["阜阳市",115.8],["宿州市",116.9],["六安市",116.5],["亳州市",115.8],["池州市",117.5],["宣城市",118.8]],
+"福建省":[["福州市",119.3],["厦门市",118.1],["莆田市",119.0],["三明市",117.6],["泉州市",118.7],["漳州市",117.6],["南平市",118.2],["龙岩市",117.0],["宁德市",119.5]],
+"江西省":[["南昌市",115.9],["景德镇市",117.2],["萍乡市",113.9],["九江市",116.0],["新余市",114.9],["鹰潭市",117.1],["赣州市",114.9],["吉安市",114.9],["宜春市",114.4],["抚州市",116.4],["上饶市",117.9]],
+"山东省":[["济南市",117.1],["青岛市",120.4],["淄博市",118.0],["枣庄市",117.3],["东营市",118.7],["烟台市",121.4],["潍坊市",119.1],["济宁市",116.6],["泰安市",117.1],["威海市",122.1],["日照市",119.5],["临沂市",118.4],["德州市",116.3],["聊城市",116.0],["滨州市",117.9],["菏泽市",115.5]],
+"河南省":[["郑州市",113.6],["开封市",114.3],["洛阳市",112.4],["平顶山市",113.2],["安阳市",114.4],["鹤壁市",114.3],["新乡市",113.9],["焦作市",113.2],["濮阳市",115.0],["许昌市",113.9],["漯河市",114.0],["三门峡市",111.2],["南阳市",112.5],["商丘市",115.7],["信阳市",114.1],["周口市",114.7],["驻马店市",114.0],["济源市",112.6,1]],
+"湖北省":[["武汉市",114.3],["黄石市",115.1],["十堰市",110.8],["宜昌市",111.3],["襄阳市",112.1],["鄂州市",114.9],["荆门市",112.2],["孝感市",113.9],["荆州市",112.2],["黄冈市",114.9],["咸宁市",114.3],["随州市",113.4],["恩施土家族苗族自治州",109.5],["仙桃市",113.4,1],["潜江市",112.9,1],["天门市",113.2,1],["神农架林区",110.7,1]],
+"湖南省":[["长沙市",112.9],["株洲市",113.1],["湘潭市",112.9],["衡阳市",112.6],["邵阳市",111.5],["岳阳市",113.1],["常德市",111.7],["张家界市",110.5],["益阳市",112.4],["郴州市",113.0],["永州市",111.6],["怀化市",110.0],["娄底市",112.0],["湘西土家族苗族自治州",109.7]],
+"广东省":[["广州市",113.3],["韶关市",113.6],["深圳市",114.1],["珠海市",113.6],["汕头市",116.7],["佛山市",113.1],["江门市",113.1],["湛江市",110.4],["茂名市",110.9],["肇庆市",112.5],["惠州市",114.4],["梅州市",116.1],["汕尾市",115.4],["河源市",114.7],["阳江市",111.9],["清远市",113.0],["东莞市",113.8],["中山市",113.4],["潮州市",116.6],["揭阳市",116.4],["云浮市",112.0]],
+"广西壮族自治区":[["南宁市",108.4],["柳州市",109.4],["桂林市",110.3],["梧州市",111.3],["北海市",109.1],["防城港市",108.6],["钦州市",108.7],["贵港市",109.6],["玉林市",110.2],["百色市",106.6],["贺州市",111.6],["河池市",108.1],["来宾市",109.2],["崇左市",107.4]],
+"海南省":[["海口市",110.3],["三亚市",109.5],["三沙市",112.3],["儋州市",109.6],["五指山市",109.5,1],["文昌市",110.8,1],["琼海市",110.5,1],["万宁市",110.4,1],["东方市",108.7,1],["定安县",110.3,1],["屯昌县",110.1,1],["澄迈县",110.0,1],["临高县",109.7,1],["白沙黎族自治县",109.2,1],["昌江黎族自治县",109.1,1]],
+"重庆市":[["重庆市",106.5]],
+"四川省":[["成都市",104.1],["自贡市",104.8],["攀枝花市",101.7],["泸州市",105.4],["德阳市",104.4],["绵阳市",104.7],["广元市",105.8],["遂宁市",105.6],["内江市",105.1],["乐山市",103.8],["南充市",106.1],["眉山市",103.8],["宜宾市",104.6],["广安市",106.6],["达州市",107.5],["雅安市",103.0],["巴中市",106.7],["资阳市",104.6],["阿坝藏族羌族自治州",102.2],["甘孜藏族自治州",101.9],["凉山彝族自治州",102.3]],
+"贵州省":[["贵阳市",106.6],["六盘水市",104.8],["遵义市",106.9],["安顺市",105.9],["毕节市",105.3],["铜仁市",109.2],["黔西南布依族苗族自治州",104.9],["黔东南苗族侗族自治州",107.9],["黔南布依族苗族自治州",107.5]],
+"云南省":[["昆明市",102.7],["曲靖市",103.8],["玉溪市",102.6],["保山市",99.2],["昭通市",103.7],["丽江市",100.2],["普洱市",100.9],["临沧市",100.1],["楚雄彝族自治州",101.5],["红河哈尼族彝族自治州",103.4],["文山壮族苗族自治州",104.2],["西双版纳傣族自治州",100.8],["大理白族自治州",100.3],["德宏傣族景颇族自治州",98.6],["怒江傈僳族自治州",98.9],["迪庆藏族自治州",99.7]],
+"西藏自治区":[["拉萨市",91.1],["日喀则市",88.9],["昌都市",97.2],["林芝市",94.4],["山南市",91.8],["那曲市",92.0],["阿里地区",79.9]],
+"陕西省":[["西安市",108.9],["铜川市",109.0],["宝鸡市",107.2],["咸阳市",108.7],["渭南市",109.5],["延安市",109.5],["汉中市",107.0],["榆林市",109.7],["安康市",109.0],["商洛市",109.9]],
+"甘肃省":[["兰州市",103.8],["嘉峪关市",98.3],["金昌市",102.2],["白银市",104.1],["天水市",105.7],["武威市",102.6],["张掖市",100.5],["平凉市",106.7],["酒泉市",98.5],["庆阳市",107.6],["定西市",104.6],["陇南市",104.9],["临夏回族自治州",103.2],["甘南藏族自治州",102.9]],
+"青海省":[["西宁市",101.8],["海东市",102.1],["海北藏族自治州",100.9],["黄南藏族自治州",102.0],["海南藏族自治州",100.6],["果洛藏族自治州",100.2],["玉树藏族自治州",97.0],["海西蒙古族藏族自治州",97.4]],
+"宁夏回族自治区":[["银川市",106.2],["石嘴山市",106.4],["吴忠市",106.2],["固原市",106.2],["中卫市",105.2]],
+"新疆维吾尔自治区":[["乌鲁木齐市",87.6],["克拉玛依市",84.9],["吐鲁番市",89.2],["哈密市",93.5],["昌吉回族自治州",87.3],["博尔塔拉蒙古自治州",82.1],["巴音郭楞蒙古自治州",86.6],["阿克苏地区",80.3],["克孜勒苏柯尔克孜自治州",76.2],["喀什地区",76.0],["和田地区",79.9],["伊犁哈萨克自治州",81.3],["塔城地区",83.0],["阿勒泰地区",88.1],["石河子市",86.0,1],["阿拉尔市",81.3,1],["图木舒克市",79.1,1],["五家渠市",87.5,1],["北屯市",87.8,1],["铁门关市",85.7,1],["双河市",84.2,1],["可克达拉市",80.8,1],["昆玉市",79.8,1],["胡杨河市",84.9,1],["新星市",93.7,1],["白杨市",83.0,1],["草湖市",88.6,1]]
+};
+var CITY_COUNT = 0;
+Object.keys(CITY_DATA).forEach(function(p){ CITY_COUNT += CITY_DATA[p].length; });
+
+/* ============================================================
+   第三部分：紫微排盘引擎（固定规则，无随机数）
+   ============================================================ */
+function mod12(n){ return ((n%12)+12)%12; }
+/* 五虎遁：由年干推寅宫天干，再顺推各宫天干 */
+function palaceStem(yearStem, branch){
+  var start = [2,4,6,8,0][yearStem%5]; /* 寅宫天干：甲己丙、乙庚戊、丙辛庚、丁壬壬、戊癸甲 */
+  return (start + mod12(branch - 2)) % 10;
+}
+/* 纳音五行（六十甲子两两一组）-> 五行局 */
+var NAYIN_ELEMENT = ["金","火","木","土","金","火","水","土","金","木","水","土","火","木","水","金","火","木","土","金","火","水","土","金","木","水","土","火","木","水"];
+var JU_OF_ELEMENT = {"水":2,"木":3,"金":4,"土":5,"火":6};
+function juFromGanZhi(stem, branch){
+  var k = stem;
+  while(k % 12 !== branch) k += 10;
+  var el = NAYIN_ELEMENT[Math.floor(k/2)];
+  var ju = JU_OF_ELEMENT[el];
+  return { element: el, ju: ju, juName: el + ["","","二","三","四","五","六"][ju] + "局" };
+}
+/* 安紫微 —— 采用文墨天机通行的安星法（《紫微斗数全书》安星表 · 商余借数法）：
+   1) 以五行局局数除农历生日，得商数与余数；
+   2) 余数为 0：以商数为定位数，自寅宫起顺数定位数之宫，即紫微所在；
+   3) 余数不为 0：定位数 = 商数 + 1，自寅宫起顺数定位数之宫为基准宫；
+      再以「局数 − 余数」得借数，借数为奇数自基准宫逆行借数步、
+      借数为偶数顺行借数步，落宫即紫微。
+   例（即此前争议的一例）：火六局、农历廿三日 —— 23 ÷ 6 商 3 余 5，
+   定位数 4，寅起顺数 4 宫至巳；借数 6 − 5 = 1 为奇，逆行 1 步，
+   紫微落辰宫，与文墨天机排盘结果一致。 */
+function ziweiBranch(lunarDay, ju){
+  var quotient = Math.floor(lunarDay / ju);
+  var remainder = lunarDay % ju;
+  if(remainder === 0){
+    return mod12(2 + quotient - 1);        /* 寅宫起，顺数商数位 */
+  }
+  var base = mod12(2 + (quotient + 1) - 1); /* 寅宫起，顺数（商 + 1）位为基准宫 */
+  var borrow = ju - remainder;             /* 借数 = 局数 − 余数 */
+  return (borrow % 2 === 0) ? mod12(base + borrow) : mod12(base - borrow);
+}
+var SIHUA_TABLE = {
+  "甲":{lu:"廉贞",quan:"破军",ke:"武曲",ji:"太阳"},
+  "乙":{lu:"天机",quan:"天梁",ke:"紫微",ji:"太阴"},
+  "丙":{lu:"天同",quan:"天机",ke:"文昌",ji:"廉贞"},
+  "丁":{lu:"太阴",quan:"天同",ke:"天机",ji:"巨门"},
+  "戊":{lu:"贪狼",quan:"太阴",ke:"右弼",ji:"天机"},
+  "己":{lu:"武曲",quan:"贪狼",ke:"天梁",ji:"文曲"},
+  "庚":{lu:"太阳",quan:"武曲",ke:"太阴",ji:"天同"},
+  "辛":{lu:"巨门",quan:"太阳",ke:"文曲",ji:"文昌"},
+  "壬":{lu:"天梁",quan:"紫微",ke:"左辅",ji:"武曲"},
+  "癸":{lu:"破军",quan:"巨门",ke:"太阴",ji:"贪狼"}
+};
+var MINGZHU_TABLE = ["贪狼","巨门","禄存","文曲","廉贞","武曲","破军","武曲","廉贞","文曲","禄存","巨门"]; /* 子..亥 年支 */
+var SHENZHU_TABLE = ["火星","天相","天梁","天同","文昌","天机","火星","天相","天梁","天同","文昌","天机"]; /* 子..亥 年支 */
+var KUIYUE_TABLE = { /* 年干 -> [天魁, 天钺] 地支索引 */
+  "甲":[1,7],"乙":[0,8],"丙":[11,9],"丁":[11,9],"戊":[1,7],
+  "己":[0,8],"庚":[1,7],"辛":[6,2],"壬":[3,5],"癸":[3,5]
+};
+var LUCUN_TABLE = {"甲":2,"乙":3,"丙":5,"丁":6,"戊":5,"己":6,"庚":8,"辛":9,"壬":11,"癸":0}; /* 年干 -> 禄存地支 */
+
+function buildChart(input){
+  /* input: {gender, solar:{y,m,d}, hourIdx, timeUnknown, city:{prov,name,lng,direct}|null, name} */
+  var lunar = solarToLunar(input.solar.y, input.solar.m, input.solar.d);
+  if(!lunar.month || !lunar.day) throw new Error("农历换算失败，请检查出生日期。");
+  var yearStem = (lunar.lunarYear - 4) % 10; if(yearStem<0) yearStem+=10;
+  var yearBranch = (lunar.lunarYear - 4) % 12; if(yearBranch<0) yearBranch+=12;
+  var yearGan = STEMS[yearStem], yearZhi = BRANCHES[yearBranch];
+  /* 闰月传统处理：前半月（≤15日）算本月，后半月算下月 */
+  var adjMonth = lunar.month, leapNote = "";
+  if(lunar.leap){
+    if(lunar.day <= 15){ leapNote = "生于闰" + lunar.month + "月，前半月按闰月本月（" + lunar.month + "月）起盘"; }
+    else { adjMonth = lunar.month % 12 + 1; leapNote = "生于闰" + lunar.month + "月，后半月按下月（" + adjMonth + "月）起盘"; }
+  }
+  var hourIdx = input.hourIdx;
+  var mingBranch = mod12(2 + (adjMonth - 1) - hourIdx);
+  var shenBranch = mod12(2 + (adjMonth - 1) + hourIdx);
+  /* 十二宫：命宫起，沿地支逆布（命->兄弟->夫妻...） */
+  var palaces = [];
+  for(var i=0;i<12;i++){
+    var br = mod12(mingBranch - i);
+    palaces.push({
+      name: PALACE_NAMES[i], branch: br, branchName: BRANCHES[br],
+      stem: palaceStem(yearStem, br), mainStars: [], auxStars: [], hua: {}
+    });
+  }
+  var byBranch = {};
+  palaces.forEach(function(p){ byBranch[p.branch] = p; });
+  function palaceAt(branch){ return byBranch[mod12(branch)]; }
+  function addMain(branch, star){ palaceAt(branch).mainStars.push(star); }
+  function addAux(branch, star){ var p = palaceAt(branch); if(p.auxStars.indexOf(star)<0) p.auxStars.push(star); }
+  /* 五行局（由命宫干支纳音定） */
+  var mingStem = palaceStem(yearStem, mingBranch);
+  var juInfo = juFromGanZhi(mingStem, mingBranch);
+  /* 十四主星 */
+  var zw = ziweiBranch(lunar.day, juInfo.ju);
+  addMain(zw, "紫微");
+  addMain(zw-1, "天机"); addMain(zw-3, "太阳"); addMain(zw-4, "武曲"); addMain(zw-5, "天同"); addMain(zw-8, "廉贞");
+  var tf = mod12(4 - zw);
+  addMain(tf, "天府");
+  addMain(tf+1, "太阴"); addMain(tf+2, "贪狼"); addMain(tf+3, "巨门"); addMain(tf+4, "天相");
+  addMain(tf+5, "天梁"); addMain(tf+6, "七杀"); addMain(tf+8, "破军");
+  /* 辅星与杂曜 */
+  var lm = adjMonth, ld = lunar.day;
+  addAux(4 + (lm-1), "左辅");            /* 正月起辰，顺行，按月 */
+  addAux(10 - (lm-1), "右弼");           /* 正月起戌，逆行，按月 */
+  addAux(10 - hourIdx, "文昌");          /* 戌宫起子时，逆行，按时 */
+  addAux(4 + hourIdx, "文曲");           /* 辰宫起子时，顺行，按时 */
+  var ky = KUIYUE_TABLE[yearGan];
+  addAux(ky[0], "天魁"); addAux(ky[1], "天钺");
+  var lucun = LUCUN_TABLE[yearGan];
+  addAux(lucun, "禄存"); addAux(lucun+1, "擎羊"); addAux(lucun-1, "陀罗");
+  var maGroup = [8,2,11,5]; /* 年支三合：申子辰马寅(2->组内映射见下) */
+  var maByBranchGroup = {};
+  [0,4,8].forEach(function(b){ maByBranchGroup[b]=2; });   /* 申子辰 -> 寅 */
+  [2,6,10].forEach(function(b){ maByBranchGroup[b]=8; });  /* 寅午戌 -> 申 */
+  [1,5,9].forEach(function(b){ maByBranchGroup[b]=11; });  /* 巳酉丑 -> 亥（巳=5,酉=9,丑=1） */
+  [3,7,11].forEach(function(b){ maByBranchGroup[b]=5; });  /* 亥卯未 -> 巳（亥=11,卯=3,未=7） */
+  addAux(maByBranchGroup[yearBranch], "天马");
+  var huoStart, lingStart;
+  if([0,4,8].indexOf(yearBranch)>=0){ huoStart=2; lingStart=10; }        /* 申子辰 */
+  else if([2,6,10].indexOf(yearBranch)>=0){ huoStart=1; lingStart=3; }   /* 寅午戌 */
+  else if([1,5,9].indexOf(yearBranch)>=0){ huoStart=3; lingStart=1; }    /* 巳酉丑 */
+  else { huoStart=9; lingStart=7; }                                       /* 亥卯未 */
+  addAux(huoStart + hourIdx, "火星");
+  addAux(lingStart + hourIdx, "铃星");
+  addAux(11 - hourIdx, "地空");          /* 亥宫起子时，逆行 */
+  addAux(11 + hourIdx, "地劫");          /* 亥宫起子时，顺行 */
+  addAux(9 + (lm-1), "天刑");            /* 正月起酉，顺行，按月 */
+  addAux(1 + (lm-1), "天姚");            /* 正月起丑，顺行，按月 */
+  var luan = mod12(3 - yearBranch);
+  addAux(luan, "红鸾"); addAux(luan + 6, "天喜");
+  addAux(4 + (lm-1) + (ld - 1), "三台");  /* 由左辅宫起初一，顺行，按日 */
+  addAux(10 - (lm-1) - (ld - 1), "八座"); /* 由右弼宫起初一，逆行，按日 */
+  /* 四化（按生年干） */
+  var sihua = SIHUA_TABLE[yearGan];
+  var starPalace = {};
+  palaces.forEach(function(p){
+    p.mainStars.concat(p.auxStars).forEach(function(s){ starPalace[s] = p; });
+  });
+  [["lu","化禄"],["quan","化权"],["ke","化科"],["ji","化忌"]].forEach(function(pair){
+    var star = sihua[pair[0]], p = starPalace[star];
+    if(p){ p.hua[star] = pair[1]; }
+  });
+  /* 大限：阳男阴女顺行，阴男阳女逆行，起运年龄 = 局数 */
+  var isYangYear = (yearStem % 2 === 0);
+  var forward = (isYangYear && input.gender==="男") || (!isYangYear && input.gender==="女");
+  return {
+    input: input, lunar: lunar, adjMonth: adjMonth, leapNote: leapNote,
+    yearGan: yearGan, yearZhi: yearZhi, yearStem: yearStem, yearBranch: yearBranch,
+    mingBranch: mingBranch, shenBranch: shenBranch, palaces: palaces,
+    juInfo: juInfo, sihua: sihua, starPalace: starPalace,
+    mingzhu: MINGZHU_TABLE[yearBranch], shenzhu: SHENZHU_TABLE[yearBranch],
+    daxian: { startAge: juInfo.ju, forward: forward },
+    ziweiBranch: zw
+  };
+}
+function palaceByName(chart, name){
+  for(var i=0;i<chart.palaces.length;i++) if(chart.palaces[i].name===name) return chart.palaces[i];
+  return null;
+}
+function starsText(p){ return p.mainStars.length ? p.mainStars.join("、") : "无主星"; }
+</script>
+
+<script>
+"use strict";
+/* ============================================================
+   第四部分：报告文案库（与排盘逻辑分离，改文案只改这里）
+   每颗主星：kw 关键词 / sum 一句话 / core 核心性格 / adv 优势 /
+   blind 盲点 / rel 人际情感 / career 事业财运 / advice 成长建议 /
+   basis 命理依据短句 / short 在其他宫位被提及时的短评
+   ============================================================ */
+var STAR_TEXT = {
+"紫微":{kw:["主见","格局"],sum:"自带主心骨，做事要先看清全局再落子。",core:"紫微为帝座之星，坐命者天生有统筹全局的意识，自尊心强，不喜欢被人随意指挥，更愿意站在定规则、分轻重的位置上思考问题。表面稳重，心里对「自己说了算」有明确需求。",adv:"格局感和组织能力是强项：能在混乱中迅速找到主线，敢于拍板，也愿意为结果负责；气场足，容易成为团队里被信赖的核心人物。",blind:"盲点在于太在意体面与掌控感：不合心意时容易先端着、不肯低头，听不进逆耳的话；对自己和他人要求都偏高，累了也不轻易示弱。",rel:"在人际与感情里偏主导，希望被尊重、被仰望，欣赏同样有能力、有分寸的人。关系里需要「被需要」的感觉，但要小心把亲密关系过成上下级。",career:"适合管理、组织、决策类角色，或需要统筹资源的岗位；财运讲究正财与地位财，收入往往随职位与影响力上升而水涨船高，不适合长期做纯执行的螺丝钉。",advice:"学着把「权威感」换成「亲和力」：关键时刻听完反对意见再拍板，重要场合给伙伴留台阶，你的领导力会从压人变成服人。",basis:"紫微为北斗帝座，居命宫主自尊与领导气质，喜左右昌曲夹辅。",short:"主见强、有领导气场"},
+"天机":{kw:["机敏","善谋"],sum:"脑子转得快，人生靠谋略和变化吃饭。",core:"天机为智慧谋略之星，坐命者思维敏捷、点子多，对信息和变化极其敏感，擅长在事情还没成型时就看到几种可能。好奇心重，兴趣广，心思细腻到有时显得想太多。",adv:"学习能力和应变能力突出：新领域上手快，善于分析利弊、设计路径；口才与策划俱佳，适合做军师型、智囊型角色。",blind:"盲点是想得多、定得少：方案在脑子里推翻重来很多遍，行动却迟迟落不了地；心思太细容易多疑，也容易因为聪明而走捷径、耍小聪明。",rel:"感情里重精神交流，需要能聊到一起、跟得上思路的人；心思细腻所以体贴，但情绪和想法变得快，对方若跟不上节奏，容易觉得你忽冷忽热。",career:"适合策划、咨询、技术、研究、教育培训等靠脑力与信息差的工作；财运多来自智慧变现与多渠道收入，但忌投机心太重、频繁换赛道。",advice:"给自己定一条规矩：想法想三遍就必须落一个最小行动。用完成度对抗完美主义，你的聪明才能真正变成成果。",basis:"天机为南斗益算之星，主智慧机谋，居命多思多虑、善筹划。",short:"思维敏捷、善谋略"},
+"太阳":{kw:["磊落","热忱"],sum:"像一团明火，走到哪里都习惯照亮别人。",core:"太阳为光明之星，坐命者性格磊落、热情直率，做事讲道理、重承诺，天生有股「把事情摆到明面上」的劲。不藏私，也不喜欢阴谋算计，乐于付出和担当。",adv:"行动力和感染力强：有担当、肯吃亏，人缘往往不错；适合站到台前，越是公开、正大光明的场合越能发挥，贵人运也多来自坦荡的口碑。",blind:"盲点是太要面子又太心急：付出多了容易心里不平衡，觉得「我都做到这份上了」；脾气来得快，话赶话时容易伤人，事后又后悔。",rel:"感情里主动、热烈，愿意为对方付出，欣赏坦率真诚的人。需要被肯定和回应，若长期付出得不到回应，热情会迅速冷却。",career:"适合公职、教育、传播、销售、管理等需要曝光与公信力的方向；财运靠名声与职位累积，先有名后有利，忌因一时意气得罪人断了财路。",advice:"付出之前先问一句「这是我心甘情愿的吗」，把预期说在前面。少一点自我感动，多一点边界感，你的光才照得久。",basis:"太阳为中天主星，主光明磊落、博爱付出，居命宫人多热情好动。",short:"热情磊落、乐于付出"},
+"武曲":{kw:["务实","果决"],sum:"不爱空谈，认准了就用结果和数字说话。",core:"武曲为财星兼将星，坐命者务实、果断、执行力强，天生对钱和资源敏感，做事讲究效率与结果，不喜欢拖泥带水。性格偏刚直，情绪不外露，认定的事很难被劝动。",adv:"理财意识和落地能力是强项：能把想法变成可执行的计划，把资源算得清清楚楚；抗压能力强，越是硬仗越能顶住，是团队里最靠谱的执行者之一。",blind:"盲点在于太刚、太省：一忙起来容易显得冷硬、不近人情；对金钱和得失看得重，有时会因为算得太清而错过需要先投入、后回报的机会。",rel:"感情里不擅长甜言蜜语，表达爱的方式是解决问题、提供保障；欣赏同样务实可靠的人。需要练习把感受说出口，不然对方容易觉得你只讲道理不讲感情。",career:"适合金融、财务、工程、运营、管理等讲数字与效率的岗位；正财运佳，靠技能与职位稳步积累，忌高杠杆投机和为人作保。",advice:"每月留一笔「不算回报」的预算给体验和人情。钱是工具不是目的，把刚硬用在事上，把柔软留给人。",basis:"武曲为北斗财星，主刚毅果断、理财有方，居命者多务实重利。",short:"务实果断、精于理财"},
+"天同":{kw:["温和","知足"],sum:"天性爱安稳，幸福感的阈值比别人低。",core:"天同为福星，坐命者性情温和、亲切好相处，不爱争抢，遇事习惯先退一步。心态偏乐观知足，情绪来得快去得也快，是朋友圈里让人放松的那类人。",adv:"亲和力和情绪价值是强项：会照顾人感受，团队氛围有你在就不会太僵；适应力不错，压力下也能自我调节，不容易钻牛角尖。",blind:"盲点是安逸心太重：能拖就拖、能躲就躲，遇到冲突第一反应是回避；年轻时容易满足于小确幸，缺乏主动争取的劲头，往往要被推一把才肯动。",rel:"感情里温柔体贴、重陪伴，喜欢细水长流的相处，欣赏脾气好、生活气息浓的人。需要小心因为怕冲突而把委屈都吞下去，攒久了集中爆发。",career:"适合服务、教育、医疗护理、人力、行政等需要耐心与亲和力的工作；财运平稳，适合细水长流的积累，忌冲动合伙和为朋友情面破财。",advice:"给自己设一个「不舒服也要开口」的练习：小事上及时表达不满，避免让安稳变成将就。舒适区可以待，但要定期往外走一步。",basis:"天同为南斗福德之星，主温和谦逊、知足常乐，居命者多好安逸。",short:"温和亲切、知足乐观"},
+"廉贞":{kw:["个性","原则"],sum:"爱憎分明有棱角，人生不走寻常路。",core:"廉贞星个性鲜明，坐命者有自己的审美和原则，爱憎分明，不喜欢被规矩和人情绑架。外表或随和或高冷，内里主意很正，对感兴趣的事投入度极高，不感兴趣的碰都不碰。",adv:"专注力和独特品味是强项：一旦认准方向，钻研深度远超常人；有原则、不好糊弄，在需要判断力与审美力的领域容易做出辨识度。",blind:"盲点是情绪和执念：喜欢时全心投入，厌恶时毫不留情，容易走极端；有时过于在意「别人怎么看我」，又装作不在意，内耗不小。",rel:"感情浓烈而专一，占有欲和敏感度都不低，需要被坚定选择的安全感；欣赏有个性、有本事的人，最怕平庸和敷衍。",career:"适合设计、艺术、公关、法律、审计、IT等需要个性与专业判断的领域；财运起伏感较强，靠专业口碑与个人品牌变现能力不错，忌意气用事的投资。",advice:"把「非黑即白」换成「先观察三天」：很多让你瞬间上头或下头的人和事，隔几天再看会平和许多。棱角留给作品，圆融留给生活。",basis:"廉贞为北斗囚星，主个性与原则，居命者爱憎分明、不喜拘束。",short:"个性鲜明、爱憎分明"},
+"天府":{kw:["稳重","包容"],sum:"像一座粮仓，稳得住场，也装得下事。",core:"天府为财库之星，坐命者稳重踏实、包容度高，做事讲究计划和后路，不喜欢冒险和失控。天生有「管家」气质，资源、人情、局面到你手里都能安排得井井有条。",adv:"稳定性和资源整合能力是强项：能存钱、能存人脉、能存口碑；遇事不慌，适合托付重要的事，是团队里定海神针式的人物。",blind:"盲点是保守和慢热：机会面前先想风险，等想清楚窗口可能已经关了；不喜欢改变，环境变了也倾向于守成，容易错过需要破局的阶段。",rel:"感情里踏实可靠、重承诺，给人强烈的安全感，欣赏温和顾家的人。表达偏含蓄，浪漫不是强项，但长久和负责是你的底牌。",career:"适合行政、财务、仓储物流、地产、后勤管理等需要稳重与积累的方向；财运以积蓄和资产见长，适合长期稳健配置，忌替人担保和熟人生意。",advice:"每年主动做一件「没有十足把握」的小事，练一练在不确定中行动的肌肉。稳是你的本事，敢变才会让稳有更大的舞台。",basis:"天府为南斗帝座、财帛之库，主稳重保守、善于积累，居命者多宽厚。",short:"稳重踏实、善于积累"},
+"太阴":{kw:["细腻","内敛"],sum:"心思像月光，温柔安静却照得清细节。",core:"太阴为阴柔之星，坐命者心思细腻、感受力强，表面安静内敛，内在情感丰富。做事偏稳、重细节，有审美和秩序感，不喜欢喧闹和粗糙，对环境与人的情绪变化很敏感。",adv:"观察力和规划力是强项：能捕捉别人忽略的细节，把账目、流程、情绪都梳理得清清楚楚；耐心足，适合做需要长期打磨的事。",blind:"盲点是想太多、说太少：心里戏很足，嘴上却云淡风轻，容易自己消化委屈；对安全感需求高，环境一有风吹草动就容易焦虑。",rel:"感情细腻专一，重氛围与默契，欣赏温柔体贴、情绪稳定的人。慢热且被动，需要对方主动靠近，但一旦认定会非常投入和长情。",career:"适合财务、设计、文案、数据、护理、研究等细致型工作；财运偏积蓄与不动产，细水长流型，夜里或幕后工作的产出往往比台前更好。",advice:"把心里的台词说出三成：很多误会不是对方不在意，而是你没给信号。练习直接表达需求，会省下大量内耗。",basis:"太阴为中天月星，主阴柔细腻、情感丰富，居命者多心思缜密。",short:"细腻敏感、情感丰富"},
+"贪狼":{kw:["魅力","欲望"],sum:"兴趣广泛魅力足，人生就爱热闹和新鲜。",core:"贪狼为欲望与才艺之星，坐命者好奇心旺盛、兴趣广泛、社交能力强，天生懂人情世故，在人群里很容易成为焦点。欲望感强，想要的东西多，学东西快，玩什么都能玩出点名堂。",adv:"人脉、才艺与应变是强项：场面上的事难不倒你，跨圈层沟通能力好；多才多艺，机会往往来自饭局、圈子和临场表现。",blind:"盲点是贪多嚼不烂：什么都想要，什么都浅尝辄止；欲望上来时自制力打折，容易在感情、金钱和享乐上栽跟头，需要防「玩过头」。",rel:"感情里魅力十足、桃花不少，喜欢新鲜感和被欣赏的感觉，欣赏有趣、有品味的人。定性需要时间，年轻时容易在几段关系里摇摆。",career:"适合销售、公关、娱乐、餐饮、市场、直播电商等与人打交道的行业；财运来源多元、机会多但守财难，忌赌性投资和酒色财气上的破财。",advice:"给自己定一条「只深耕两件事」的规矩：才艺和兴趣可以广，但变现的主线只能有一两条。收得住欲望，魅力才是资产。",basis:"贪狼为北斗桃花之星，主欲望才艺、交际广阔，居命者多才多艺。",short:"多才多艺、交际能力强"},
+"巨门":{kw:["思辨","口才"],sum:"一张嘴能成事也能惹事，凡事爱问个为什么。",core:"巨门为暗曜，主口舌与思辨，坐命者观察力强、爱钻研、疑心重，不轻易相信表面说法，凡事要自己验证过才算数。口才好，逻辑强，天生适合靠嘴和脑子吃饭。",adv:"分析力和表达力是强项：能把复杂问题讲清楚，把隐藏的问题挖出来；适合辩论、讲授、谈判，在需要「把话说明白」的场合无可替代。",blind:"盲点是言语和猜疑：说话直、爱较真，无意中得罪人还不自知；对人对事先怀疑三分，信任建立得慢，亲近的人容易被你的追问问到累。",rel:"感情里重沟通质量，需要能深聊、讲道理的对象；欣赏聪明坦率的人。猜疑心是关系里的暗礁，练习先相信、再求证，能少掉大半争吵。",career:"适合律师、教师、主持、咨询、销售、研究、舆情公关等靠口才与分析的工作；财运来自专业表达与信息价值，忌因口舌是非丢单破财，合同文书要留痕。",advice:"重要对话前先在心里过一遍：「这句话说出来是解决问题，还是赢一口气？」把思辨用在事上、把温和留给人，你的口才会只剩好处。",basis:"巨门为北斗暗星，主口舌是非与思辨，居命者多好学多疑、能言善辩。",short:"口才出众、善于思辨"},
+"天相":{kw:["得体","辅佐"],sum:"天生的二把手体质，把人和事都安排得体面。",core:"天相为印星，主服务与辅佐，坐命者为人得体、注重分寸，擅长协调关系、处理事务，天生知道什么场合说什么话。责任心强，答应的事会办妥，是组织里最让人省心的角色。",adv:"协调力和口碑是强项：能把尖锐的矛盾处理得圆融，把杂乱的事务安排得有序；贵人运好，长辈和上级缘佳，容易被托付要事。",blind:"盲点是太在意形象和评价：为了维持体面容易委屈自己，当老好人当到累；做事依赖认可，缺乏独立拍板的魄力，有时会被「为你好」的框架绑住。",rel:"感情里体贴周到、重礼数，欣赏斯文得体、家教好的人；相处舒服但激情不是强项，需要小心把日子过成客客气气的合作关系。",career:"适合行政、人力、秘书、客服管理、法务、公共事务等协调型岗位；财运稳健，多得益于职位与贵人，适合在成熟平台里步步高升。",advice:"练习说一次「不」：你的体面不需要靠答应所有事来维持。把辅佐的本事用在值得的人和事上，你会轻松很多。",basis:"天相为南斗印星，主辅佐协调、衣食丰足，居命者多为人得体、重信誉。",short:"得体周到、善于协调"},
+"天梁":{kw:["长者风","原则"],sum:"自带长者气场，爱操心，也总被人求助。",core:"天梁为荫星，主庇护与原则，坐命者心地正直、有长者风范，天生爱管闲事、爱讲道理，遇到不平的事忍不住要出头。做事讲原则、重名誉，年轻时就常显老成。",adv:"担当和公信力是强项：关键时刻靠得住，能为团队和家人遮风挡雨；适合做需要公信力的角色，口碑就是你最硬的通货。",blind:"盲点是好为人师和操心命：道理讲多了容易惹人烦，明明是好心却落得「爹味」评价；为别人兜底太多，自己的事反而耽误。",rel:"感情里像照顾者，欣赏懂事、价值观正的人；相处中容易不自觉说教，需要把「讲道理」换成「多倾听」，关系才不会变成课堂。",career:"适合医疗、教育、公益、监察、法务、顾问等荫庇他人的行业；财运平稳清白，多有长辈缘与贵人荫庇，忌趟浑水、赚不该赚的钱。",advice:"把「帮人」设个额度：先问对方需不需要，再决定出不出手。收一收说教欲，你的善意才不会打折。",basis:"天梁为南斗荫星，主庇护清廉、逢凶化吉，居命者多老成持重、好管闲事。",short:"正直老成、乐于庇护他人"},
+"七杀":{kw:["魄力","果敢"],sum:"天生打硬仗的料，越难的局越兴奋。",core:"七杀为将星，主肃杀与变革，坐命者魄力十足、行动力惊人，不怕冲突不怕推倒重来，人生节奏快、起伏大。性格直来直去，讨厌磨叽和虚伪，认定的目标会全力扑上去。",adv:"开拓力和决断力是强项：能在别人不敢动的时候先动，在乱局中杀出一条路；适合从零到一、攻坚克难，是天生的开路先锋。",blind:"盲点是冲动和树敌：脾气爆、耐心差，容易在情绪上头时做决定；只顾冲锋不顾后方，得罪人而不自知，健康和人际都容易透支。",rel:"感情来得猛烈、爱憎分明，欣赏同样干脆、有本事的人；相处需要给彼此留空间，控制欲上来时先冷静十分钟，很多架可以不吵。",career:"适合创业、销售攻坚、技术攻坚、军警、外科、竞技类等高强度领域；财运大起大落，赚钱能力强但破财也快，忌冲动扩张和孤注一掷。",advice:"重大决定强制过夜：七杀的运气多半坏在「当场拍板」上。给自己留一晚缓冲，你的魄力会变成胜率而不是风险。",basis:"七杀为南斗将星，主肃杀果敢、开疆拓土，居命者多性急好胜、不畏艰难。",short:"果敢强势、开拓力强"},
+"破军":{kw:["破局","创新"],sum:"不破不立，人生关键词是推倒重来。",core:"破军为耗星，主破旧立新，坐命者天生不喜欢一成不变，对旧规则、旧秩序有本能的质疑，越是别人说「一直都是这样」的地方，你越想动手改一改。人生波动大，故事多。",adv:"创新力和行动力是强项：敢为天下先，能在废墟上建新东西；适应变化的能力远超常人，行业洗牌期往往是你弯道超车的时候。",blind:"盲点是破坏容易建设难：推翻旧计划的快感大于收尾的耐心，容易虎头蛇尾；花钱和做决定都偏冲动，情绪上头时说的话很难收回。",rel:"感情热烈而富有戏剧感，不喜欢平淡无奇的相处，欣赏有个性、不黏人的对象；需要学会在新鲜感消退后经营日常，不然关系容易散场。",career:"适合创业、改革型岗位、产品、技术、自由职业等不拘一格的方向；财运波动大，有偏财与破财并存的特征，现金流管理是终身课题。",advice:"每次想推倒重来之前，先列一张「保留清单」：哪些是真问题，哪些只是你腻了。破得准，才叫破局；破得勤，只是折腾。",basis:"破军为北斗耗星，主破旧立新、变化无常，居命者多不安现状、敢作敢为。",short:"敢于破旧立新、不安现状"}
+};
+var STAR_SHORT_EXTRA = {"禄存":"踏实稳重、重积蓄","左辅":"得人助、协调力佳","右弼":"得人助、性情温和","文昌":"文采与条理俱佳","文曲":"口才与才艺出众","天魁":"贵人提携、逢难有解","天钺":"贵人暗助、机遇不少","天马":"好动外向、驿马奔波","擎羊":"个性刚硬、执行力强","陀罗":"做事执着、易遇拖延","火星":"性子急、爆发力强","铃星":"心思深、耐力过人","地空":"想法独特、不喜俗套","地劫":"行事大胆、防破耗","红鸾":"人缘与桃花俱旺","天喜":"喜庆缘佳、人缘好","天刑":"自律严谨、重规矩","天姚":"有魅力、异性缘佳","三台":"稳重有靠、步步高升","八座":"有靠山、地位缘佳"};
+function starShort(s){ var t = STAR_TEXT[s]; if(t) return t.short; return STAR_SHORT_EXTRA[s] || ""; }
+var JU_TEXT = {
+  "水二局":{name:"水二局",trait:"水主智，局数最小，起运最早，人生节奏偏快，适应力与灵活性是底色。",kw:"灵动",advice:"水二局的人宜以柔克刚：把灵活性用在顺势而为上，而不是频繁改主意。",color:"深蓝",colorHex:"#2b4c9b"},
+  "木三局":{name:"木三局",trait:"木主仁，成长性强，像树木一样需要时间扎根，一旦成型便持续向上。",kw:"成长",advice:"木三局的人宜深耕：给一件事足够长的生长期，别在半路频繁移植。",color:"青绿",colorHex:"#2e7d4f"},
+  "金四局":{name:"金四局",trait:"金主义，规则感与执行力强，做事有标准、有棱角，越打磨越出锋芒。",kw:"锋芒",advice:"金四局的人宜刚柔并济：标准可以高，语气可以软，锋芒对事不对人。",color:"银白",colorHex:"#b9bec9"},
+  "土五局":{name:"土五局",trait:"土主信，厚重务实，起步或许不快，但积累一旦成型便难以撼动。",kw:"厚重",advice:"土五局的人宜主动求变：每隔几年给生活换一次土壤，厚重才不会变成迟缓。",color:"大地黄",colorHex:"#c9a227"},
+  "火六局":{name:"火六局",trait:"火主礼，局数最大，起运最晚，属于大器晚成、越烧越旺的类型。",kw:"热烈",advice:"火六局的人宜耐住前期：你的节奏在后面，前期的积累不是浪费，是在攒柴。",color:"朱红",colorHex:"#c0392b"}
+};
+var SHEN_PALACE_TEXT = {
+  "命宫":"身宫与命宫同宫，人生主线清晰，内外一致，想做的事和实际做的事高度统一，中年后发力点仍在自我实现上。",
+  "夫妻宫":"身宫落夫妻宫，人生重心随年纪增长逐渐转向亲密关系与合作伙伴，选对伴侣与合伙人，对你后半程的影响极大。",
+  "财帛宫":"身宫落财帛宫，中年之后的人生课题集中在赚钱与理财上，财务独立是你安全感的主要来源。",
+  "迁移宫":"身宫落迁移宫，越往外走运越开，异地发展、对外业务、走动型工作更能发挥你，外面的世界是你的主战场。",
+  "官禄宫":"身宫落官禄宫，事业是你人生的主轴，中年后成就感的来源主要是工作与社会角色，适合在职场上长期深耕。",
+  "福德宫":"身宫落福德宫，年纪越大越重视内心感受与生活品质，精神世界的富足程度，直接决定你后半程的幸福感。"
+};
+var HUA_NAME = {lu:"化禄",quan:"化权",ke:"化科",ji:"化忌"};
+var HUA_SHORT = {lu:"缘起与资源汇聚之处",quan:"掌控与发力之处",ke:"名声与贵人之处",ji:"执念与功课所在之处"};
+</script>
+
+<script>
+"use strict";
+/* ============================================================
+   第五部分：报告生成（命宫主星 + 身宫 + 三方四正 + 四化 + 五行局 组合）
+   ============================================================ */
+var ZODIAC = {"子":"鼠","丑":"牛","寅":"虎","卯":"兔","辰":"龙","巳":"蛇","午":"马","未":"羊","申":"猴","酉":"鸡","戌":"狗","亥":"猪"};
+var HUA_MEAN = {
+  lu:"化禄主缘起与资源，所在宫位容易得到机会、人缘与财禄汇聚。",
+  quan:"化权主掌控与担当，所在宫位是你发力、争取话语权的地方。",
+  ke:"化科主名声与贵人，所在宫位容易获得认可、考试文书之利与长辈提携。",
+  ji:"化忌主执念与功课，所在宫位容易纠结、付出多回收慢，是这一生要反复修的课题。"
+};
+function firstSent(t){ var i = t.indexOf("。"); return i>0 ? t.slice(0,i+1) : t; }
+function palaceOfBranch(chart, branch){
+  for(var i=0;i<chart.palaces.length;i++) if(chart.palaces[i].branch===mod12(branch)) return chart.palaces[i];
+  return null;
+}
+function huaOfStar(chart, star){
+  var keys = ["lu","quan","ke","ji"];
+  for(var i=0;i<keys.length;i++) if(chart.sihua[keys[i]]===star) return keys[i];
+  return null;
+}
+function buildReport(chart){
+  var ming = palaceByName(chart, "命宫");
+  var qianyi = palaceByName(chart, "迁移宫");
+  var borrowed = ming.mainStars.length===0;
+  var effStars = borrowed ? qianyi.mainStars.slice() : ming.mainStars.slice();
+  var pName = effStars[0], sName = effStars[1] || null;
+  var P = STAR_TEXT[pName], S = sName ? STAR_TEXT[sName] : null;
+  var ju = JU_TEXT[chart.juInfo.juName];
+  var shenPalace = palaceOfBranch(chart, chart.shenBranch);
+  /* 三方四正：命宫 + 对宫(迁移) + 三合两宫(财帛、官禄) */
+  var caibo = palaceByName(chart, "财帛宫"), guanlu = palaceByName(chart, "官禄宫");
+  var trine = [ming, qianyi, caibo, guanlu];
+  function inTrine(p){ return trine.indexOf(p)>=0; }
+  function huaPalace(key){ return chart.starPalace[chart.sihua[key]]; }
+  /* 关键词：主星2 + 副星1 + 五行局1 */
+  var kws = P.kw.slice();
+  if(S) kws.push(S.kw[0]);
+  kws.push(ju.kw);
+  if(kws.length<4) kws.push(shenPalace.name.replace("宫","")+"为重");
+  kws = kws.filter(function(v,i){ return kws.indexOf(v)===i; }).slice(0,4);
+  /* 总评 */
+  var summary = (borrowed ? "命宫无主星，借对宫迁移宫的" + effStars.join("、") + "论命——" : "命宫" + effStars.join("、") + "坐守——") + P.sum + (S ? "兼有" + sName + "的特质：" + firstSent(S.core).replace(/^[^，,]*[，,]/,"") : "") + ju.trait;
+  /* 六大板块 */
+  var coreParas = [P.core];
+  if(S) coreParas.push(sName + "同宫，为这份性格加上另一层底色：" + S.core);
+  coreParas.push(SHEN_PALACE_TEXT[shenPalace.name] || "");
+  coreParas.push("五行局定为" + ju.trait);
+  var advParas = [P.adv];
+  var trineDesc = [guanlu, caibo, qianyi].map(function(p){
+    return p.name + "的" + starsText(p) + (p.mainStars.length ? "（" + p.mainStars.map(starShort).filter(Boolean).join("、") + "）" : "");
+  }).join("；");
+  advParas.push("三方四正配置上，" + trineDesc + "，这些力量会从事业、财务与外部机会三个方向，共同托住命宫的发挥。");
+  var luP = huaPalace("lu");
+  if(luP && inTrine(luP)) advParas.push("生年化禄落" + luP.name + "，正好在三方四正之内，意味着资源与机会容易流向你人生的主战场，是盘里一处明显的顺势之力。");
+  var mingAuxGood = ming.auxStars.filter(function(s){ return ["左辅","右弼","文昌","文曲","天魁","天钺","禄存"].indexOf(s)>=0; });
+  if(mingAuxGood.length) advParas.push("命宫另有" + mingAuxGood.join("、") + "同宫或加持，贵人与助力运不错，关键时刻常有人愿意推你一把。");
+  var blindParas = [P.blind];
+  var jiP = huaPalace("ji");
+  if(jiP === ming) blindParas.push("生年化忌正落命宫：你对自己最在意的那部分最容易钻牛角尖，" + HUA_MEAN.ji);
+  else if(jiP && inTrine(jiP)) blindParas.push("生年化忌落" + jiP.name + "，在三方四正之内：与该宫位相关的课题（" + jiP.name.replace("宫","") + "）容易成为你反复纠结、需要额外花心思经营的一环。");
+  var mingAuxHard = ming.auxStars.filter(function(s){ return ["擎羊","陀罗","火星","铃星","地空","地劫"].indexOf(s)>=0; });
+  if(mingAuxHard.length) blindParas.push("命宫见" + mingAuxHard.join("、") + "等煞曜，性情中带冲劲或执拗的一面，顺境时是魄力，逆境时要防冲动决策与无谓消耗。");
+  var fuqi = palaceByName(chart, "夫妻宫");
+  var relParas = [P.rel];
+  relParas.push("夫妻宫坐" + starsText(fuqi) + (fuqi.mainStars.length ? "（" + fuqi.mainStars.map(starShort).filter(Boolean).join("、") + "）" : "，需借对宫官禄宫星曜参看") + "，提示你容易被这类特质的人吸引，亲密关系的相处模式也多往这个方向走。");
+  var luanXi = [];
+  [ming, fuqi].forEach(function(p){ p.auxStars.forEach(function(s){ if((s==="红鸾"||s==="天喜") && luanXi.indexOf(s)<0) luanXi.push(s); }); });
+  if(luanXi.length) relParas.push("命宫、夫妻宫一带见" + luanXi.join("、") + "，桃花与喜庆缘分不弱，人缘和异性缘都算盘里的加分项，宜善用在正缘与正经社交上。");
+  var careerParas = [P.career];
+  careerParas.push("官禄宫坐" + starsText(guanlu) + (guanlu.mainStars.length ? "（" + guanlu.mainStars.map(starShort).filter(Boolean).join("、") + "）" : "") + "，是事业风格的主要写照；财帛宫坐" + starsText(caibo) + (caibo.mainStars.length ? "（" + caibo.mainStars.map(starShort).filter(Boolean).join("、") + "）" : "") + "，反映你的进财方式与理财习惯。");
+  var quanP = huaPalace("quan");
+  if(quanP === guanlu || quanP === caibo) careerParas.push("生年化权落" + quanP.name + "，事业与财务是你最愿意发力、也最有机会握住话语权的领域，" + HUA_MEAN.quan);
+  else if(luP === guanlu || luP === caibo) careerParas.push("生年化禄落" + luP.name + "，这一块的财禄与机会缘起较旺，" + HUA_MEAN.lu);
+  var adviceParas = [P.advice, ju.advice];
+  adviceParas.push("化忌在" + jiP.name + "（" + chart.sihua.ji + "化忌）：不必把它看成坏事，它标出的正是你最舍得投入、也最容易想不开的地方。提前知道功课在哪，遇事时就多一分清醒。");
+  var sections = [
+    {title:"核心性格", paras:coreParas},
+    {title:"优势", paras:advParas},
+    {title:"盲点", paras:blindParas},
+    {title:"人际情感", paras:relParas},
+    {title:"事业财运", paras:careerParas},
+    {title:"成长建议", paras:adviceParas}
+  ];
+  /* 命理依据 5–8 条 */
+  var basis = [];
+  basis.push({t:"命宫主星：" + effStars.join("、") + (borrowed?"（借星安宫）":""), text:(borrowed?"命宫无十四主星坐守，按借星法以对宫迁移宫主星论命宫格局。":"") + P.basis + (S ? " " + sName + "同宫：" + S.basis : ""), src:"《紫微斗数全书》"});
+  basis.push({t:"命宫干支定局：" + chart.juInfo.juName, text:"命宫在" + BRANCHES[chart.mingBranch] + "宫，天干为" + STEMS[palaceStem(chart.yearStem, chart.mingBranch)] + "，其纳音五行属" + chart.juInfo.element + "，故定为" + chart.juInfo.juName + "，大限自 " + chart.juInfo.ju + " 岁起运。", src:"《紫微斗数全书》"});
+  basis.push({t:"身宫落" + shenPalace.name, text:SHEN_PALACE_TEXT[shenPalace.name] || "身宫为后天发力之处，随中年运程渐显其重。", src:"《紫微斗数全集》"});
+  basis.push({t:"三方四正会照", text:"命宫三方四正为迁移宫、财帛宫、官禄宫，分别坐 " + starsText(qianyi) + "、" + starsText(caibo) + "、" + starsText(guanlu) + "。论命以命宫为主，必参三方四正之星情，方能定格局之成败。", src:"《太微赋》"});
+  basis.push({t:"生年化禄、化权", text:chart.sihua.lu + "化禄落" + (luP?luP.name:"") + "——" + HUA_MEAN.lu + chart.sihua.quan + "化权落" + (quanP?quanP.name:"") + "——" + HUA_MEAN.quan, src:"《紫微斗数全书》"});
+  var keP = huaPalace("ke");
+  basis.push({t:"生年化科、化忌", text:chart.sihua.ke + "化科落" + (keP?keP.name:"") + "——" + HUA_MEAN.ke + chart.sihua.ji + "化忌落" + (jiP?jiP.name:"") + "——" + HUA_MEAN.ji, src:"《紫微斗数全集》"});
+  basis.push({t:"命主、身主", text:"按生年支" + chart.yearZhi + "定命主星为" + chart.mingzhu + "、身主星为" + chart.shenzhu + "。命主示先天禀赋之方向，身主示后天际遇之助力，报告中的性格底色与之相应。", src:"《紫微斗数全集》"});
+  if(mingAuxGood.length || mingAuxHard.length){
+    basis.push({t:"命宫辅煞加会", text:"命宫辅星杂曜见 " + (ming.auxStars.join("、") || "无") + "。吉曜同宫则格局得助，煞曜同宫则性情添棱角，吉煞同参方合原盘。", src:"《骨髓赋》"});
+  }
+  return {
+    keywords:kws, summary:summary, sections:sections, basis:basis.slice(0,8),
+    effStars:effStars, borrowed:borrowed, shenPalace:shenPalace, ju:ju
+  };
+}
+</script>
+
+<script>
+"use strict";
+/* ============================================================
+第六部分：界面逻辑、命盘渲染与分享图（原生 Canvas）
+============================================================ */
+function $(id){ return document.getElementById(id);}
+function showView(id){
+["view-home","view-form","view-result"].forEach(function(v){ $(v).classList.toggle("active", v===id);});
+window.scrollTo(0,0);
+}
+function toast(msg){
+var t = $("toast"); t.textContent = msg; t.classList.add("show");
+clearTimeout(t._timer); t._timer = setTimeout(function(){ t.classList.remove("show");}, 2600);
+}
+/* ---------- 真太阳时校正 ----------
+   真太阳时 = 北京时间 + (出生地经度 - 120°) × 4 分钟。
+   经度时差按整分钟取用（向零取整）：如乌鲁木齐 87.6° 约 -129 分钟，
+   11:30 北京时间校正为 9:21；泰州 119.9° 约 -0.4 分钟，不跨分钟。 */
+function pad2(n){ return (n<10? "0": "") + n; }
+function fmtMinutesOfDay(mins){ return pad2(Math.floor(mins/60)) + ":" + pad2(mins%60); }
+function longitudeDiffMinutes(lng){ return Math.trunc((lng - 120) * 4); }
+function solarDiffText(lng){
+var exact = (lng - 120) * 4, applied = longitudeDiffMinutes(lng);
+if(applied === 0) return "约 " + exact.toFixed(1) + " 分钟（不足 1 分钟，按 0 分钟校正）";
+return "约 " + applied + " 分钟";
+}
+function trueSolarCalc(solar, hh, mm, lng){
+var diff = longitudeDiffMinutes(lng);
+var total = hh*60 + mm + diff;
+var dayShift = Math.floor(total/1440);
+var within = total - dayShift*1440;
+var d = new Date(solar.y, solar.m-1, solar.d + dayShift, 12);
+return {
+diff: diff, dayShift: dayShift, minutes: within,
+timeStr: fmtMinutesOfDay(within),
+hourIdx: hourToShichen(Math.floor(within/60)),
+solar: { y: d.getFullYear(), m: d.getMonth()+1, d: d.getDate() }
+};
+}
+function updateClockHint(){
+var v = $("f-clock").value;
+if(!v) return;
+var hh = parseInt(v.split(":")[0],10), mm = parseInt(v.split(":")[1],10);
+var beforeIdx = hourToShichen(hh);
+var city = getSelectedCity();
+if(city){
+var ts = trueSolarCalc({y:2000, m:1, d:1}, hh, mm, city.lng);
+var msg = "北京时间 " + v + " 属" + SHICHEN[beforeIdx].name + " → 按" + city.name + "经度换算，真太阳时 " + ts.timeStr + "，属" + SHICHEN[ts.hourIdx].name;
+msg += (ts.hourIdx !== beforeIdx)? "，已跨时辰，将按校正后的时辰排盘。": "，未跨时辰。";
+$("clock-hint").textContent = msg;
+} else {
+$("clock-hint").textContent = "已自动换算为：" + SHICHEN[beforeIdx].name + "（" + SHICHEN[beforeIdx].range + "）。未选出生地，将按北京时间直接定时刻，不做真太阳时校正。";
+}
+}
+/* ---------- 表单状态 ---------- */
+var timeMode = "shichen"; /* shichen | clock | unknown */
+var selectedShichen = null; /* 0..11 */
+var state = { chart:null, report:null, posterUrl:null, posterBlob:null};
+
+var grid = $("shichen-grid");
+SHICHEN.forEach(function(sc, i){
+var b = document.createElement("button");
+b.type = "button";
+b.innerHTML = sc.name + "<small>" + sc.range + "</small>";
+b.addEventListener("click", function(){
+selectedShichen = i;
+Array.prototype.forEach.call(grid.children, function(c, j){ c.classList.toggle("on", j===i);});
+$("err-time").classList.remove("show");
+});
+grid.appendChild(b);
+});
+function setTimeMode(mode){
+timeMode = mode;
+$("tab-shichen").classList.toggle("on", mode==="shichen");
+$("tab-clock").classList.toggle("on", mode==="clock");
+$("tab-unknown").classList.toggle("on", mode==="unknown");
+$("pane-shichen").style.display = mode==="shichen"? "": "none";
+$("pane-clock").style.display = mode==="clock"? "": "none";
+$("pane-unknown").style.display = mode==="unknown"? "": "none";
+$("err-time").classList.remove("show");
+}
+$("tab-shichen").addEventListener("click", function(){ setTimeMode("shichen");});
+$("tab-clock").addEventListener("click", function(){ setTimeMode("clock");});
+$("tab-unknown").addEventListener("click", function(){ setTimeMode("unknown");});
+$("f-clock").addEventListener("change", function(){
+if(!this.value) return;
+updateClockHint();
+$("err-time").classList.remove("show");
+});
+/* ---------- 出生地 ---------- */
+var provSel = $("f-prov"), citySel = $("f-city");
+Object.keys(CITY_DATA).forEach(function(p){
+var o = document.createElement("option"); o.value = p; o.textContent = p; provSel.appendChild(o);
+});
+function fillCities(prov, selected){
+citySel.innerHTML = '<option value="">城市（可不选）</option>';
+if(!prov ||!CITY_DATA[prov]) return;
+CITY_DATA[prov].forEach(function(c){
+var o = document.createElement("option");
+o.value = c[0];
+o.textContent = c[0] + (c[2]? "（省直辖县级市）": "");
+if(c[0]===selected) o.selected = true;
+citySel.appendChild(o);
+});
+updateClockHint();
+}
+provSel.addEventListener("change", function(){ fillCities(this.value, "");});
+var searchInput = $("f-city-search"), searchBox = $("search-results");
+searchInput.addEventListener("input", function(){
+var q = this.value.trim();
+searchBox.innerHTML = "";
+if(!q){ searchBox.classList.remove("show"); return;}
+var hits = [];
+Object.keys(CITY_DATA).forEach(function(p){
+CITY_DATA[p].forEach(function(c){ if(c[0].indexOf(q)>=0) hits.push({prov:p, city:c});});
+});
+hits.slice(0,30).forEach(function(h){
+var b = document.createElement("button");
+b.type = "button";
+b.innerHTML = h.prov + " · " + h.city[0] + (h.city[2]? '<span class="tag-direct">省直辖县级市</span>': "");
+b.addEventListener("click", function(){
+provSel.value = h.prov; fillCities(h.prov, h.city[0]);
+searchInput.value = h.city[0];
+searchBox.classList.remove("show");
+});
+searchBox.appendChild(b);
+});
+searchBox.classList.toggle("show", hits.length>0);
+});
+document.addEventListener("click", function(e){
+if(e.target!== searchInput) searchBox.classList.remove("show");
+});
+function getSelectedCity(){
+var prov = provSel.value, name = citySel.value;
+if(!prov ||!name) return null;
+var rec = null;
+CITY_DATA[prov].forEach(function(c){ if(c[0]===name) rec = c;});
+if(!rec) return null;
+return { prov:prov, name:name, lng:rec[1], direct:!!rec[2]};
+}
+citySel.addEventListener("change", function(){ updateClockHint();});
+/* ---------- 提交与校验 ---------- */
+$("btn-start").addEventListener("click", function(){ showView("view-form");});
+$("btn-back-home").addEventListener("click", function(){ showView("view-home");});
+$("btn-again").addEventListener("click", function(){ showView("view-form");});
+$("birth-form").addEventListener("submit", function(e){
+e.preventDefault();
+var ok = true;
+var genderEl = document.querySelector('input[name="gender"]:checked');
+$("err-gender").classList.toggle("show",!genderEl); if(!genderEl) ok = false;
+var dv = $("f-date").value, solar = null;
+if(dv){
+var parts = dv.split("-").map(function(x){ return parseInt(x,10);});
+var dt = new Date(parts[0], parts[1]-1, parts[2]);
+if(parts[0]>=1900 && parts[0]<=2100 && dt.getFullYear()===parts[0] && dt.getMonth()===parts[1]-1 && dt.getDate()===parts[2]){
+solar = { y:parts[0], m:parts[1], d:parts[2]};
+}
+}
+$("err-date").classList.toggle("show",!solar); if(!solar) ok = false;
+var hourIdx = null, timeUnknown = false, clockStr = "", clockHH = 0, clockMM = 0;
+if(timeMode==="shichen"){ hourIdx = selectedShichen;}
+else if(timeMode==="clock"){
+var cv = $("f-clock").value;
+if(cv){ clockStr = cv; clockHH = parseInt(cv.split(":")[0],10); clockMM = parseInt(cv.split(":")[1],10); hourIdx = hourToShichen(clockHH); }
+} else { hourIdx = 6; timeUnknown = true;}
+$("err-time").classList.toggle("show", hourIdx===null); if(hourIdx===null) ok = false;
+if(!ok){ toast("还有信息没填完整，请按红色提示检查"); return;}
+/* 真太阳时校正：仅「输入具体时间 + 选了出生地」时发生；
+   直接选时辰视为真太阳时辰；无出生地按北京时间；不清楚按午时。 */
+var city = getSelectedCity();
+var correction = null, chartSolar = solar;
+if(timeUnknown){
+correction = { mode:"unknown" };
+} else if(timeMode==="shichen"){
+correction = { mode:"direct", shichenIdx: hourIdx };
+} else if(city){
+var tsCalc = trueSolarCalc(solar, clockHH, clockMM, city.lng);
+correction = {
+mode:"corrected", beijing: clockStr,
+beforeIdx: hourToShichen(clockHH), afterIdx: tsCalc.hourIdx,
+crossed: tsCalc.hourIdx !== hourToShichen(clockHH),
+trueSolar: tsCalc.timeStr, diff: tsCalc.diff, dayShift: tsCalc.dayShift,
+correctedDate: tsCalc.solar
+};
+chartSolar = tsCalc.solar; hourIdx = tsCalc.hourIdx;
+} else {
+correction = { mode:"beijing", beijing: clockStr, beforeIdx: hourIdx, afterIdx: hourIdx, crossed:false };
+}
+var input = {
+name: $("f-name").value.trim(),
+gender: genderEl.value,
+solar: chartSolar, rawSolar: solar, hourIdx: hourIdx, timeUnknown: timeUnknown,
+city: city, timeMode: timeMode, clockStr: clockStr, correction: correction
+};
+try{
+var chart = buildChart(input);
+state.chart = chart;
+state.report = buildReport(chart);
+state.posterUrl = null; state.posterBlob = null;
+renderResult(chart, state.report);
+showView("view-result");
+}catch(err){
+toast(err.message || "排盘失败，请检查出生日期");
+}
+});
+/* ---------- 结果渲染 ---------- */
+var BRANCH_POS = {5:[1,1],6:[2,1],7:[3,1],8:[4,1],4:[1,2],9:[4,2],3:[1,3],10:[4,3],2:[1,4],1:[2,4],0:[3,4],11:[4,4]};
+var HUA_CLASS = {"化禄":"lu","化权":"quan","化科":"ke","化忌":"ji"};
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function starHtml(p, star){
+var h = p.hua[star];
+return esc(star) + (h? '<span class="hua ' + HUA_CLASS[h] + '">' + h.slice(1) + "</span>": "");
+}
+function renderResult(chart, report){
+var inp = chart.input, L = chart.lunar;
+var displayName = inp.name || "我";
+$("r-title").textContent = displayName + "的紫微命盘";
+var rawSolar = inp.rawSolar || inp.solar;
+var corr0 = inp.correction || null;
+$("r-subtitle").textContent = inp.gender + " · 公历 " + rawSolar.y + "年" + rawSolar.m + "月" + rawSolar.d + "日 · " + SHICHEN[inp.hourIdx].name + "（" + SHICHEN[inp.hourIdx].range + "）" + (corr0 && corr0.mode==="corrected"? " · 按真太阳时排盘": "");
+var lunarLine = "农历：" + chart.yearGan + chart.yearZhi + "年（属" + ZODIAC[chart.yearZhi] + "）" + (L.leap? "闰": "") + L.month + "月" + L.day + "日";
+if(chart.leapNote) lunarLine += "；" + chart.leapNote;
+var cityLine;
+if(inp.city){
+cityLine = "出生地：" + inp.city.prov + " " + inp.city.name + (inp.city.direct? "（省直辖县级市）": "") + " · 东经 " + inp.city.lng.toFixed(1) + "°";
+} else {
+cityLine = "出生地：未填写";
+}
+$("r-birthline").textContent = lunarLine + "　|　" + cityLine;
+$("r-unknown-banner").innerHTML = inp.timeUnknown
+? '<div class="warn-banner">未提供准确时辰，本盘按午时（11:00–13:00）推算，命宫与部分星曜位置可能与实际有出入，报告仅供参考。</div>': "";
+/* 真太阳时校正说明区 */
+var corrHtml = "";
+if(corr0 && corr0.mode==="corrected"){
+var verdict = corr0.crossed
+? '<span class="crossed">已跨时辰</span>：' + corr0.beijing + " 在北京时间下属" + SHICHEN[corr0.beforeIdx].name + "，按出生地经度校正后变为真太阳时 " + corr0.trueSolar + "，属" + SHICHEN[corr0.afterIdx].name + "。命宫、身宫、五行局、十四主星，以及文昌、文曲、火星、铃星、地空、地劫等按时辰安放的星曜，全部按校正后的" + SHICHEN[corr0.afterIdx].name + "排。"
+: '<span class="same">未跨时辰</span>：校正前后同为' + SHICHEN[corr0.afterIdx].name + "，本盘即按" + SHICHEN[corr0.afterIdx].name + "排。";
+if(corr0.dayShift === 1) verdict += "真太阳时已进入次日，农历日期按次日（" + corr0.correctedDate.y + "年" + corr0.correctedDate.m + "月" + corr0.correctedDate.d + "日）计算。";
+else if(corr0.dayShift === -1) verdict += "真太阳时仍在前一日，农历日期按前一日（" + corr0.correctedDate.y + "年" + corr0.correctedDate.m + "月" + corr0.correctedDate.d + "日）计算。";
+corrHtml = '<div class="panel"><h3>真太阳时校正</h3><div class="ov-grid">' +
+'<div><span class="k">输入时间（北京时间）</span><span class="v">' + esc(corr0.beijing) + " · " + SHICHEN[corr0.beforeIdx].name + "</span></div>" +
+'<div><span class="k">真太阳时（校正后）</span><span class="v">' + corr0.trueSolar + " · " + SHICHEN[corr0.afterIdx].name + "</span></div>" +
+'<div><span class="k">校正前时辰</span><span class="v">' + SHICHEN[corr0.beforeIdx].name + "（" + SHICHEN[corr0.beforeIdx].range + "）</span></div>" +
+'<div><span class="k">校正后时辰</span><span class="v">' + SHICHEN[corr0.afterIdx].name + "（" + SHICHEN[corr0.afterIdx].range + "）</span></div>" +
+'<div><span class="k">出生地经度时差</span><span class="v">东经 ' + inp.city.lng.toFixed(1) + "° · " + solarDiffText(inp.city.lng) + "</span></div>" +
+'<div><span class="k">是否跨时辰</span><span class="v">' + (corr0.crossed? "已跨时辰": "未跨时辰") + "</span></div>" +
+"</div><p style=\"margin-top:10px\">" + verdict + "</p></div>";
+} else if(corr0 && corr0.mode==="direct"){
+corrHtml = '<div class="panel"><h3>出生时刻说明</h3><p>直接选时辰，按真太阳时辰理解，未再校正。本盘按你所选的' + SHICHEN[inp.hourIdx].name + "（" + SHICHEN[inp.hourIdx].range + "）排盘" + (inp.city? "，出生地经度未参与换算。": "。") + "</p></div>";
+} else if(corr0 && corr0.mode==="beijing"){
+corrHtml = '<div class="panel"><h3>出生时刻说明</h3><p>未选出生地，未做真太阳时校正。按输入的北京时间 ' + esc(corr0.beijing) + "（" + SHICHEN[corr0.afterIdx].name + "）直接定时刻排盘；若实际出生地经度与东经 120° 相差较大，真太阳时时辰可能不同。</p></div>";
+}
+$("r-correction").innerHTML = corrHtml;
+/* 命盘格 */
+var chartEl = $("chart"); chartEl.innerHTML = "";
+chart.palaces.forEach(function(p){
+var pos = BRANCH_POS[p.branch];
+var cell = document.createElement("div");
+cell.className = "cell" + (p.name==="命宫"? " ming": "");
+cell.style.gridColumn = pos[0]; cell.style.gridRow = pos[1];
+var mainHtml = p.mainStars.length? p.mainStars.map(function(s){ return starHtml(p,s);}).join(" "): '<span style="color:var(--muted);font-size:12px">无主星</span>';
+var auxHtml = p.auxStars.map(function(s){ return starHtml(p,s);}).join(" ");
+cell.innerHTML =
+'<div class="gz"><span>' + STEMS[p.stem] + p.branchName + "宫</span><span>" + p.branchName + "</span></div>" +
+'<div class="main-stars">' + mainHtml + "</div>" +
+(auxHtml? '<div class="aux-stars">' + auxHtml + "</div>": "") +
+'<div class="pname">' + p.name + (p.branch===chart.shenBranch? '<span class="shen">身宫</span>': "") + "</div>";
+chartEl.appendChild(cell);
+});
+var center = document.createElement("div");
+center.className = "cell center";
+center.innerHTML =
+'<div class="cname">' + esc(displayName) + " · " + chart.juInfo.juName + "</div>" +
+'<div class="cline">命主 <b>' + chart.mingzhu + "</b> · 身主 <b>" + chart.shenzhu + "</b><br/>" +
+"命宫在" + BRANCHES[chart.mingBranch] + " · 身宫在" + BRANCHES[chart.shenBranch] + "（" + report.shenPalace.name + "）<br/>" +
+"四化：禄" + chart.sihua.lu + " 权" + chart.sihua.quan + " 科" + chart.sihua.ke + " 忌" + chart.sihua.ji + "<br/>" +
+"大限 " + chart.daxian.startAge + " 岁起运 · " + (chart.daxian.forward? "顺行": "逆行") + "</div>";
+chartEl.appendChild(center);
+/* 关键词与总评 */
+$("r-keywords").innerHTML = report.keywords.map(function(k){ return '<span class="kw">' + esc(k) + "</span>";}).join("");
+$("r-summary").textContent = report.summary;
+/* 面板 */
+var ming = palaceByName(chart, "命宫");
+var overview = '<div class="panel"><h3>命盘总览</h3><div class="ov-grid">' +
+'<div><span class="k">命主星</span><span class="v">' + chart.mingzhu + "</span></div>" +
+'<div><span class="k">身主星</span><span class="v">' + chart.shenzhu + "</span></div>" +
+'<div><span class="k">五行局</span><span class="v">' + chart.juInfo.juName + "</span></div>" +
+'<div><span class="k">命宫主星</span><span class="v">' + (ming.mainStars.length? ming.mainStars.join("、"): "无主星（借对宫）") + "</span></div>" +
+'<div><span class="k">身宫落点</span><span class="v">' + report.shenPalace.name + "（" + BRANCHES[chart.shenBranch] + "宫）</span></div>" +
+'<div><span class="k">幸运色</span><span class="v"><span class="lucky-dot" style="background:' + report.ju.colorHex + '"></span>' + report.ju.color + "</span></div>" +
+"</div></div>";
+var html = overview;
+report.sections.forEach(function(sec, i){
+html += '<div class="panel"><h3><span class="no">' + ["一","二","三","四","五","六"][i] + "</span>" + sec.title + "</h3>" +
+sec.paras.filter(Boolean).map(function(p){ return "<p>" + esc(p) + "</p>";}).join("") + "</div>";
+});
+$("r-panels").innerHTML = html;
+$("r-basis").innerHTML = report.basis.map(function(b){
+return '<div class="basis-item"><h4>' + esc(b.t) + "</h4><p>" + esc(b.text) + '</p><p class="src">出处：' + esc(b.src) + "</p></div>";
+}).join("");
+$("r-basis-wrap").open = false;
+}
+/* ---------- 分享图（原生 Canvas） ---------- */
+function wrapText(ctx, text, maxWidth){
+var lines = [], cur = "";
+for(var i=0;i<text.length;i++){
+var ch = text[i];
+if(ch==="\n"){ lines.push(cur); cur = ""; continue;}
+var test = cur + ch;
+if(ctx.measureText(test).width > maxWidth && cur){ lines.push(cur); cur = ch;}
+else cur = test;
+}
+if(cur) lines.push(cur);
+return lines;
+}
+function buildPosterCanvas(){
+var chart = state.chart, report = state.report, inp = chart.input;
+var W = 1080, PAD = 64, CW = W - PAD*2;
+var meas = document.createElement("canvas").getContext("2d");
+var blocks = []; /* {type,...} 先量高度再绘制 */
+var H = PAD;
+function addText(text, font, lh, gap){
+meas.font = font;
+var lines = wrapText(meas, text, CW);
+blocks.push({type:"text", lines:lines, font:font, lh:lh});
+H += lines.length * lh + (gap||10);
+}
+function addRule(gap){ blocks.push({type:"rule"}); H += (gap||18);}
+addText("紫微斗数 · 人格报告", "900 54px 'Noto Serif SC', serif", 68, 4);
+var nameLine = (inp.name || "我") + " · " + inp.gender + " · " + chart.juInfo.juName + " · 命宫主星 " + report.effStars.join("、");
+addText(nameLine, "28px sans-serif", 40, 2);
+var pSolar = inp.rawSolar || inp.solar;
+addText("公历 " + pSolar.y + "年" + pSolar.m + "月" + pSolar.d + "日 " + SHICHEN[inp.hourIdx].name + "生 · 农历" + chart.yearGan + chart.yearZhi + "年" + (chart.lunar.leap?"闰":"") + chart.lunar.month + "月" + chart.lunar.day + "日", "24px sans-serif", 36, 2);
+if(inp.city) addText("出生地：" + inp.city.prov + " " + inp.city.name, "24px sans-serif", 36, 2);
+var corrPoster = inp.correction || null;
+if(corrPoster && corrPoster.mode==="corrected") addText("真太阳时校正：北京时间 " + corrPoster.beijing + "（" + SHICHEN[corrPoster.beforeIdx].name + "）→ 真太阳时 " + corrPoster.trueSolar + "（" + SHICHEN[corrPoster.afterIdx].name + "）" + (corrPoster.crossed? "，已跨时辰，按校正后时辰排盘": "，未跨时辰"), "24px sans-serif", 36, 2);
+else if(corrPoster && corrPoster.mode==="direct") addText("直接选时辰，按真太阳时辰理解，未再校正。", "24px sans-serif", 36, 2);
+else if(corrPoster && corrPoster.mode==="beijing") addText("未选出生地，未做真太阳时校正，按北京时间排盘。", "24px sans-serif", 36, 2);
+if(inp.timeUnknown) addText("注：未提供准确时辰，本盘按午时推算，仅供参考。", "24px sans-serif", 36, 2);
+addRule(14);
+blocks.push({type:"chart"}); H += 560 + 16;
+addText("关键词：" + report.keywords.join(" · "), "700 32px 'Noto Serif SC', serif", 46, 4);
+addText(report.summary, "28px sans-serif", 44, 8);
+addText("命主 " + chart.mingzhu + " · 身主 " + chart.shenzhu + " · 身宫在" + report.shenPalace.name + " · 幸运色 " + report.ju.color + " · 四化：禄" + chart.sihua.lu + "／权" + chart.sihua.quan + "／科" + chart.sihua.ke + "／忌" + chart.sihua.ji, "25px sans-serif", 40, 6);
+addRule(12);
+report.sections.forEach(function(sec){
+addText("", "700 32px 'Noto Serif SC', serif", 44, 2);
+sec.paras.filter(Boolean).forEach(function(p){ addText(p, "27px sans-serif", 43, 8);});
+H += 8;
+});
+addRule(16);
+addText("命理为传统文化中的性格观察视角，本报告供自我认识与娱乐参考。", "22px sans-serif", 34, 0);
+H += PAD;
+var canvas = document.createElement("canvas");
+canvas.width = W; canvas.height = H;
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "#17102a"; ctx.fillRect(0,0,W,H);
+ctx.strokeStyle = "#c9a227"; ctx.lineWidth = 3; ctx.strokeRect(18,18,W-36,H-36);
+var y = PAD;
+blocks.forEach(function(b){
+if(b.type==="rule"){ ctx.strokeStyle = "#c9a227"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(PAD, y+4); ctx.lineTo(W-PAD, y+4); ctx.stroke(); y += 18; return;}
+if(b.type==="chart"){
+var gx = PAD, gy = y, gw = CW, cell = gw/4, chh = 560/4;
+chart.palaces.forEach(function(p){
+var pos = BRANCH_POS[p.branch];
+var x = gx + (pos[0]-1)*cell, yy = gy + (pos[1]-1)*chh;
+ctx.strokeStyle = p.name==="命宫"? "#c9a227": "#4a3d75"; ctx.lineWidth = p.name==="命宫"? 3: 1.5;
+ctx.strokeRect(x, yy, cell, chh);
+ctx.fillStyle = "#a79cc4"; ctx.font = "20px sans-serif"; ctx.textAlign = "left";
+ctx.fillText(STEMS[p.stem] + p.branchName + "宫", x+10, yy+28);
+ctx.fillStyle = "#f2ecdc"; ctx.font = "900 27px 'Noto Serif SC', serif";
+var ms = p.mainStars.length? p.mainStars.join(" "): "无主星";
+wrapText(ctx, ms, cell-18).slice(0,2).forEach(function(ln, li){ ctx.fillText(ln, x+10, yy+66+li*32);});
+ctx.fillStyle = "#ece7f8"; ctx.font = "700 22px sans-serif";
+ctx.fillText(p.name + (p.branch===chart.shenBranch? " ·身": ""), x+10, yy+chh-14);
+});
+ctx.fillStyle = "#241a42"; ctx.fillRect(gx+cell, gy+chh, cell*2, chh*2);
+ctx.strokeStyle = "#4a3d75"; ctx.strokeRect(gx+cell, gy+chh, cell*2, chh*2);
+ctx.fillStyle = "#f2ecdc"; ctx.font = "900 32px 'Noto Serif SC', serif"; ctx.textAlign = "center";
+ctx.fillText(chart.juInfo.juName, gx+cell*2, gy+chh*2 - 16);
+ctx.font = "22px sans-serif"; ctx.fillStyle = "#a79cc4";
+ctx.fillText("命主 " + chart.mingzhu + " · 身主 " + chart.shenzhu, gx+cell*2, gy+chh*2 + 22);
+ctx.textAlign = "left";
+y += 560 + 16; return;
+}
+ctx.font = b.font;
+ctx.fillStyle = b.font.indexOf("700")>=0 || b.font.indexOf("900")>=0? "#f2ecdc": "#e6e0f2";
+if(b.font.indexOf("54px")>=0) ctx.fillStyle = "#e9cf87";
+b.lines.forEach(function(ln){ ctx.fillText(ln, PAD, y + b.lh*0.78); y += b.lh;});
+y += 10;
+});
+return canvas;
+}
+function generatePoster(cb){
+if(state.posterUrl){ cb(state.posterUrl); return;}
+setTimeout(function(){
+try{
+var canvas = buildPosterCanvas();
+if(canvas.toBlob){
+canvas.toBlob(function(blob){
+state.posterBlob = blob;
+state.posterUrl = URL.createObjectURL(blob);
+cb(state.posterUrl);
+}, "image/png");
+} else {
+state.posterUrl = canvas.toDataURL("image/png");
+cb(state.posterUrl);
+}
+}catch(err){ cb(null);}
+}, 60);
+}
+function setBtnLoading(btn, loading, label){
+if(loading){ btn.dataset.old = btn.textContent; btn.textContent = "生成中…"; btn.disabled = true;}
+else { btn.textContent = label || btn.dataset.old || btn.textContent; btn.disabled = false;}
+}
+function openPosterModal(url){
+$("poster-img").src = url;
+var dl = $("poster-download"); dl.href = url;
+$("poster-modal").classList.add("show");
+}
+$("poster-close").addEventListener("click", function(){ $("poster-modal").classList.remove("show");});
+$("poster-modal").addEventListener("click", function(e){ if(e.target===this) this.classList.remove("show");});
+$("btn-share").addEventListener("click", function(){
+var btn = this;
+setBtnLoading(btn, true); toast("正在生成分享图…");
+generatePoster(function(url){
+setBtnLoading(btn, false, "生成分享图");
+if(!url){ toast("生成失败，请再试一次"); return;}
+var done = false;
+if(state.posterBlob && navigator.canShare && navigator.share){
+var file = new File([state.posterBlob], "ziwei-report.png", {type:"image/png"});
+if(navigator.canShare({files:[file]})){
+done = true;
+navigator.share({files:[file], title:"紫微斗数人格报告"}).catch(function(){ openPosterModal(url);});
+}
+}
+if(!done) openPosterModal(url);
+});
+});
+$("btn-save").addEventListener("click", function(){
+var btn = this;
+setBtnLoading(btn, true); toast("正在生成图片…");
+generatePoster(function(url){
+setBtnLoading(btn, false, "保存图片");
+if(!url){ toast("生成失败，请再试一次"); return;}
+var a = document.createElement("a");
+a.href = url; a.download = "ziwei-report.png";
+document.body.appendChild(a); a.click(); document.body.removeChild(a);
+openPosterModal(url);
+toast("已开始下载；若未弹出下载，可在预览图上长按保存");
+});
+});
+</script>
+</body>
+</html>
